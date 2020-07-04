@@ -1,0 +1,539 @@
+{# show company homepage #}
+{% extends 'base-company.html.twig' %}
+
+{% block title %} {{ parent() }} - Entreprises {% endblock %}
+
+{% block body %}
+    {# modal messages #}
+    <div id="info-1" class="modal">
+        <div class="container" style="text-align:justify;">
+            <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">Bienvenue sur votre tableau de bord !</p><br><br>
+            <p> Le tableau 
+                <span style="color:#4c4c4c !important;font-weight:900;">Candidats</span>
+                Contient la liste de toutes les personnes qui ont postulées à une de vos annonces. 
+            </p>
+            <p> 
+                Votre mission : <span style="font-weight:900;">accepter ou refuser les candidats ! </span>
+            </p>
+            <p> 
+                Pour cela : 
+                <ul>
+                    <li>allez dans l'onglet "Annonces" de la barre lattérale</li><br>
+                    <li>Cliquez sur l'annonce de votre choix pour voir apparaitre les candidats</li><br>
+                    <li>Cliquez ensuite sur <button class="btn btn-success btn-sm"><i class="fas fa-user-check" title="Embaucher"></i> 
+                        Recruter</button> ou 
+                        <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></li><br>
+                </ul>
+            </p>
+            <span style="font-weight:900;">Merci !</span> 
+        </div> 
+    </div>
+
+    <div id="info-2" class="modal">
+        <div class="container" style="text-align:justify;">
+            <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">Bienvenue sur votre tableau de bord !</p><br><br>
+            <p> Le tableau 
+                <span style="color:#4c4c4c !important;font-weight:900;">Recrutements en cours </span>
+                Contient la liste des candidats que vous êtes en train de recruter.  
+            </p>
+            <p>Concrètement cela veut dire que vous en êtes à la signature des contrats. C'est une excellente nouvelle ! </p>
+            <p> 
+                Dès que les contrats sont signés, pensez a : 
+                <ul>
+                    <li>vous rendre dans l'onglet "Annonces"</li>
+                    <li>sélectionner l'annonce sur laquelle vous venez de signer le contrat</li>
+                    <li>cliquer sur  <button class="btn btn-info btn-sm"><i class="far fa-stop-circle"></i> Finaliser l'inscription</button> pour indiquer que le recrutement est terminé</li>
+                </ul>
+
+                <span style="font-weight:900;">Merci !</span> 
+            </p>
+        </div> 
+    </div>
+
+    <div id="info-3" class="modal">
+        <div class="container" style="text-align:justify;">
+            <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">Bienvenue sur votre tableau de bord !</p><br><br>
+            <p> La carte 
+                <span style="color:#4c4c4c !important;font-weight:900;">Infos du Compte </span>
+                contient les infos que vous avez renseignées lors de votre inscription.  
+            </p>
+            <p>Vous pouvez les mettre à jour dans l'onglet "Infos du Compte" de la barre lattérale. </p>
+            <p> Dans cet onglet vous changerez aussi vos mots de passe ou téléchargerez votre photo de profil.</p>
+            <p> 
+                <span style="font-weight:900;">Bonne prise en main !</span> 
+            </p>
+        </div> 
+    </div>
+
+    <div id="info-4" class="modal">
+        <div class="container" style="text-align:justify;">
+            <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">Bienvenue sur votre tableau de bord !</p><br><br>
+            <p> Le tableau 
+                <span style="color:#4c4c4c !important;font-weight:900;">En Attente d'Acceptation</span>
+                Contient la liste des candidats que vous souhaitez recruter et qui doivent accepter votre demande.  
+            </p>
+            <p>Prenez patience car la signature du contrat n'est pas loin !</p>
+            <p>
+                <span style="font-weight:900;">Merci !</span> 
+            </p>
+        </div> 
+    </div>
+
+    <div id="info-5" class="modal">
+        <div class="container" style="text-align:justify;">
+            <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">Bienvenue sur votre tableau de bord !</p><br><br>
+            <p> Le tableau 
+                <span style="color:#4c4c4c !important;font-weight:900;">Recrutements terminés</span>
+                Contient la liste des candidats que vous avez recrutés.  
+            </p>
+            <p>C'est un peu comme la mémoire de votre activité sur Sweeetch... <a href="">#nostalgie</a></p>
+            <p>
+                <span style="font-weight:900;">En espérant vous apporter satisfaction !</span> 
+            </p>
+        </div> 
+    </div>
+    {# account state #}
+    <div class="row">
+
+        <div class="col-lg-6 col-sm-12">
+
+            <div class="content-title">
+                <h1>Tableau de Bord</h1>
+            </div>
+            {# success or error message #}
+            {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {# account state #}
+            <div class="row account-state">
+                {% if company.user.confirmed == true %}
+                <div class="col-12 col-sm-6 col-md-6">
+                    <div class="info-checked info-box info-success mb-3">
+                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-check"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Etat du compte : </span>
+                            <span class="info-box-number">Validé par Sweeetch</span>
+                        </div>
+                    </div>
+                </div>
+                {% else %} 
+                <div class="col-lg-12 col-sm-12 col-md-12">
+                    <div class="info-box mb-3">
+                    <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-hourglass-start"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Etat du Compte : </span>
+                            <span class="info-box-number">En cours de confirmation</span>
+                        </div>
+                        
+                    </div>
+                </div> 
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-lg-6 col-sm-12" style="position:relative;">
+            {# account state #}
+            {% if company.user.activateToken != null %}
+            <div class="account-state" id="as-2">
+                <div style="width:100%;">
+                    <div class="info-box mb-3">
+                    <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-exclamation-triangle"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Pensez à valider votre email !</span>
+                            <span class="info-box-number"><form action="{{ path('resend_mail_company', {id:company.id}) }}" method="post"><button style="border:0px;background:white;padding:0px;text-decoration:underline;color:#00A6E7;">Renvoyer un lien de confirmation</button></form></span>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+            {% endif %}
+        </div>     
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-6">
+
+            <div class="card col-lg-" id="card-1" style="padding:0px;">
+                {# account info #}
+                <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
+                    
+                    <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
+                        Infos du compte
+                        <a href="#info-3" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                        <i class="fas fa-question-circle"></i>
+                        </a>
+                    </p>
+
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus" style="color:#8e8e8e;"></i>
+                      </button>
+                    </div>
+                </div>
+                
+                <div class="card-body card-responsive-table">
+                    <div class="table-padding table-responsive">
+                        <table class="table m-0">
+                            <tbody>
+                                <tr>
+                                    <th>Email</th>
+                                    <td>{{ company.user.email }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Entreprise</th>
+                                    <td>{{ company.companyName }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Prénom</th>
+                                    <td>{{ company.firstname }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Nom</th>
+                                    <td>{{ company.lastname }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Adresse</th>
+                                    <td>{{ company.address }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Code Postal</th>
+                                    <td>{{ company.zipCode }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Ville</th>
+                                    <td>{{ company.city }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Téléphone</th>
+                                    <td>{{ company.telNumber }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Siret</th>
+                                    <td>{{ company.siret }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-12">
+            <div class="card" style="padding:0px;">
+                {# your offers #}
+                <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
+                    
+                    <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
+                        Vos Annonces
+                        <a href="#info-4" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                        <i class="fas fa-question-circle"></i>
+                        </a>
+                    </p>
+
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus" style="color:#8e8e8e;"></i>
+                      </button>
+                    </div>
+                </div>
+
+                <div class="card-body card-responsive-table">
+                    <table id="dash5" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Annonces</th>
+                                <th>Etat du Recrutement</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for offers in offers %}
+
+                                {% if offers.applies | length == 0 %} 
+                            
+                                <tr>
+                                    <td><a href="{{ path('offers_edit', {'id': offers.id, 'company':company.id}) }}">{{ offers.title }}</a></td>
+                                   
+                                    <td> <span class="badge bg-secondary">Ouverte</span> </td>
+                                  
+                                </tr>
+                                
+                                {% elseif offers.applies | length > 0 %}
+
+                                {% if offers.applies[0].finished == false and offers.applies[0].confirmed == false %} 
+
+                                <tr>
+                                    <td><a href="{{ path('offers_edit', {'id': offers.applies[0].offers.id, 'company':company.id}) }}">{{ offers.applies[0].offers.title }}</a></td>
+                                
+                                    <td>  {# offer state #}  
+                                        {% if offers.applies[0].confirmed == false %}
+                                            {% if offers.applies[0].agree == false %}
+                                            {% set hiredArray = [] %}
+                                            {% for applies in offers.applies %}
+                                                {% if applies.hired == true %}
+                                                {% set hiredArray = hiredArray|merge([{ hiredArray: applies }]) %}
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% if hiredArray | length == 0 %}
+                                                {# count nb refused and unavailables #}
+                                                {% set refused = [] %}
+                                                {% set unavailable = [] %}
+                                                {# {% set wait = [] %} #}
+                                                {% for applies in offers.applies %}
+                                                    {# refused #}
+                                                    {% if applies.refused == true %}
+                                                        {% set refused = refused|merge([{ refused: applies }]) %}
+                                                    {% endif %}
+                                                    {# unavailable #}
+                                                    {% if applies.unavailable == true %}
+                                                        {% set unavailable = unavailable|merge([{ unavailable: applies }]) %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                                {# total #}
+                                                {% set minus = refused|length + unavailable|length %}
+                                                {# render #}
+                                                {% if offers.applies|length - minus == 0 %}
+                                                <span class="badge badge-secondary right" title="candidatures">Ouverte</span>
+                                                {% else %}
+                                                <span class="badge badge-primary right" title="candidatures">
+                                                Candidats : {{ offers.applies|length - minus  }} 
+                                                </span>
+                                                {% endif %}
+                                            {% else %}
+                                            <span class="badge bg-warning">En attente</span>
+                                            {% endif %}
+                                            {% else %}
+                                            <span class="badge bg-info">A Finaliser</span>    
+                                            {% endif %}
+                                        {% else %}
+                                        <span class="badge bg-success">En cours</span>
+                                        {% endif %} 
+                                    </td>
+                                
+                                </tr>
+
+                                    {% endif %} 
+                            
+                                {% endif %}
+                                
+                            {% endfor %}
+                           
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    {# candidates #}
+        <div class="col-lg-12">
+            <h3 style="color:#4C4C4C !important;">Candidatures</h3><br>
+            <div class="row">
+              
+                <div class="col-lg-6">
+
+                    <div class="card" style="padding:0px;">
+
+                        <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
+                            <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
+                                1. Candidats 
+                                <a href="#info-1" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                                <i class="fas fa-question-circle"></i>
+                                </a>
+                            </p>
+            
+                            <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus" style="color:#8e8e8e;"></i>
+                            </button>
+                            </div>
+                        </div>
+                
+                        <div class="card-body card-responsive-table">
+                            <table id="dash1" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Nom du Candidat</th>
+                                        <th>Annonces</th>
+                                        <th>Etat du Recrutement</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for applies in applies %}
+                                    <tr class="border-top">
+                                        <td>{{ applies.student.name }} {{ applies.student.lastName }}</td>
+                                        <td><a href="{{ path('offers_edit', {id:applies.offers.id, company:company.id}) }}" class="action-link">{{ applies.offers.title }}</a></td>
+                                        <td>
+                                            <span class="badge badge-primary right">Candidat</span> 
+                                        </td>
+                                    </tr>
+                                    {% endfor %} 
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-6">
+                    <div class="card" style="padding:0px;">
+    {# apply in progress #}
+                        <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
+                            <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
+                                3. Recrutements en cours 
+                                <a href="#info-2" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                                <i class="fas fa-question-circle"></i>
+                                </a>
+                            </p>
+
+                            <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus" style="color:#8e8e8e;"></i>
+                            </button>
+                            </div>
+                        </div>
+                
+                        <div class="card-body card-responsive-table">
+                            <table id="dash2" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Nom du Candidat</th>
+                                        <th>Annonces</th>
+                                        <th>Etat du Recrutement</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for agree in agree %}
+                                    <tr class="border-top">
+                                        <td>{{ agree.student.name }} {{ agree.student.lastName }}</td>
+                                        <td><a href="{{ path('offers_edit', {id:agree.offers.id, company:company.id}) }}" class="action-link">{{ agree.offers.title }}</a></td>
+                                        <td>
+                                            {% if agree.hired == true %}
+                                            <span class="badge badge-warning right">En attente d'acceptation</span>
+                                            {% elseif agree.agree == true %}
+                                            <span class="badge bg-info">A Finaliser</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %} 
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-6">
+
+                    <div class="card" style="padding:0px;">
+
+                        <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
+{# waiting for agree #}
+                            <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
+                                2. En Attente d'Acceptation
+                                <a href="#info-4" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                                <i class="fas fa-question-circle"></i>
+                                </a>
+                            </p>
+        
+                            <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus" style="color:#8e8e8e;"></i>
+                            </button>
+                            </div>
+                        </div>
+        
+                        <div class="card-body card-responsive-table">
+                            <table id="dash3" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Nom du Candidat</th>
+                                        <th>Annonces</th>
+                                        <th>Etat du Recrutement</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for hired in hired %}
+                                        <tr class="border-top">
+                                            <td>{{ hired.student.name }} {{ hired.student.lastName }}</td>
+                                            <td><a href="{{ path('offers_edit', {id:hired.offers.id, company:company.id}) }}" class="action-link">{{ hired.offers.title }}</a></td>
+                                            <td>
+                                                <span class="badge badge-warning right">En attente d'acceptation</span>
+                                            </td>
+                                        </tr>
+                                    {% endfor %} 
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-6">
+
+                    <div class="card" style="padding:0px;">
+
+                        <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
+{# finished applies #}
+                            <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
+                                4. Recrutements terminés
+                                <a href="#info-5" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                                <i class="fas fa-question-circle"></i>
+                                </a>
+                            </p>
+
+                            <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus" style="color:#8e8e8e;"></i>
+                            </button>
+                            </div>
+                        </div>
+                
+                        <div class="card-body card-responsive-table">
+                            <table id="dash4" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Nom du Candidat</th>
+                                        <th>Annonces</th>
+                                        <th>Etat du Recrutement</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for finished in finished %}
+                                    <tr class="border-top">
+                                        <td>{{ finished.student.name }} {{ finished.student.lastName }}</td>
+                                        <td><a href="{{ path('offers_edit', {id:finished.offers.id, company:company.id}) }}" class="action-link">{{ finished.offers.title }}</a></td>
+                                        <td>
+                                            <span class="badge badge-success right">Recruté</span>
+                                        </td>
+                                    </tr>
+                                    {% endfor %} 
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+{{ parent() }}
+
+<script>
+    $(document).ready(function() {
+        $('#card-1').CardWidget('toggle');
+    });
+</script>
+   
+{% endblock %}
+

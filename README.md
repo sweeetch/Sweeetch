@@ -1,2 +1,3 @@
 # Sweeetch
-sweeetch-projet
+Sweeetch's website. 
+

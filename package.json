@@ -1,0 +1,34 @@
+{
+    "devDependencies": {
+        "@ckeditor/ckeditor5-alignment": "^17.0.0",
+        "@ckeditor/ckeditor5-basic-styles": "^17.0.0",
+        "@ckeditor/ckeditor5-editor-classic": "^17.0.0",
+        "@ckeditor/ckeditor5-essentials": "^17.0.0",
+        "@ckeditor/ckeditor5-paragraph": "^17.0.0",
+        "@symfony/webpack-encore": "^0.28.3",
+        "bootstrap": "^4.4.1",
+        "core-js": "^3.6.5",
+        "jquery": "^3.5.1",
+        "node-sass": "^4.14.1",
+        "popper.js": "^1.16.1",
+        "regenerator-runtime": "^0.13.5",
+        "sass-loader": "^7.0.1",
+        "webpack-notifier": "^1.6.0"
+    },
+    "license": "UNLICENSED",
+    "private": true,
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress"
+    },
+    "dependencies": {
+        "acorn": "^6.4.1",
+        "admin-lte": "^3.0",
+        "animate.css": "^3.7.2",
+        "font-awesome": "^4.7.0",
+        "minimist": "^1.2.2",
+        "tinymce": "^5.2.2"
+    }
+}

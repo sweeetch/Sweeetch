@@ -1,0 +1,79 @@
+{# list of finished recruits by student #}
+
+{% extends 'base-student.html.twig' %}
+
+{% block title %} {{ parent() }} - Etudiants {% endblock %}
+
+{% block body %}
+
+{% if is_granted('ROLE_SUPER_STUDENT') %}
+{# title #}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6">
+            <h1 class="m-0 text-dark">Inscriptions Terminees</h1> <br>
+        </div>
+    </div>
+</div> <br>
+{# success or error message #}
+{% for message in app.flashes('success') %}
+<div class="alert alert-success">
+    {{ message }}
+</div>
+{% endfor %}
+{# offers list #}
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card overflow-box">
+                <div class="card-body">
+                    <table id="example1" class="table table-bordered table-hover">
+
+                        <thead>
+                            <tr>
+                                <th>Formation</th>
+                                <th>Domaine</th>
+                                <th>Ecole</th>
+                                <th>Situation</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        {% for finished in finished %}
+
+                        <tbody>
+                            <tr>
+                                <td>
+                                <a href="{{ path('show_student_hired', {id:finished.studies.id, student:student.id}) }}">{{ finished.studies.title }}</a>
+                                </td>
+                                <td>{{ finished.studies.domain }}</td> 
+                                <td> {{ finished.studies.school.companyName }}</td>
+                                <td> 
+                                    terminé
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% else %}
+{# if not allowed #}
+<br><br>
+<div class="col-lg-6 col-sm-12 col-md-12">
+    <div class="info-box mb-3 overflow-box">
+    <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-hourglass-start"></i></span>
+
+        <div class="info-box-nopage info-box-content">
+            <span class="info-box-text">Votre compte doit être validé pour voir cette section</span>            
+        </div>
+        
+    </div>
+</div> 
+{% endif %}
+
+{% endblock %}

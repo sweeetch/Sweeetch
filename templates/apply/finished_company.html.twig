@@ -1,0 +1,63 @@
+{# index of all finished applies for companies profil #}
+
+{% extends 'base-company.html.twig' %}
+
+{% block title %} {{ parent() }} - Entreprises {% endblock %}
+
+{% block body %}
+
+{% if is_granted('ROLE_SUPER_COMPANY') %}
+{# title #}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6">
+            <h1 class="m-0">Annonces Fermées</h1> <br>
+        </div>
+    </div>
+</div> 
+{# success or error message #}
+{% for message in app.flashes('success') %}
+<div class="alert alert-success">
+    {{ message }}
+</div>
+{% endfor %}
+{# table #}
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-responsive-table">
+    
+                <div class="card-body">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Titre</th>
+                                <th>Lieu</th>
+                                <th>Domaine</th>
+                                <th>Fermée le</th>
+                                <th>Situation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                
+                        {% for applies in applies %}
+                            <tr>
+                                <td><a href="{{ path('show_finished', {'id': applies.offers.id, 'company':company.id}) }}">{{ applies.offers.title }}</a></td>
+                                <td>{{ applies.offers.location }}</td>
+                                <td>{{ applies.offers.domain }}</td>
+                                <td>{{ applies.dateRecruit|date("d/m/Y à g\\hi") }}</td>
+                                <td> <span class="badge bg-success">Recruté</span> </td>
+                            </tr>
+                        {% endfor %}
+                                                        
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endif %}
+
+{% endblock %}

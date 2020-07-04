@@ -1,0 +1,17 @@
+{% extends 'base-student.html.twig' %}
+
+{% block title %} {{ parent() }} - Etudiants {% endblock %}
+
+{% block body %}
+
+<h1>Mon Profil</h1>
+
+{% for message in app.flashes('success') %}
+  <div class="alert alert-success">
+      {{ message }}
+  </div>
+{% endfor %}
+
+{{ include('profile/_form.html.twig', {'button_label': 'Update'}) }}
+      
+{% endblock %}

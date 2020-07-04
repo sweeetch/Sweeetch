@@ -1,0 +1,75 @@
+// student offers timeline 
+
+// grey line 
+.timeline {
+    margin:0px;
+    
+    &::before {
+        width:95%;
+        width: 80%;
+        height:4px;
+        top:50px;
+        left:0px;
+    }
+
+    & > div > .timeline-item {
+        margin:0px;
+        margin:auto;
+    }
+}
+
+// icons 
+.time-icon {
+    &:first-child {
+        position:relative;
+        top:36px;
+        left:0px;
+        width:20px;
+
+        &:hover {
+            cursor:pointer;
+        }
+    }
+
+    &:nth-child(2) {
+        position:relative;
+        top:-10px;
+        width:20px;
+        left:43%;
+
+        &:hover {
+            cursor:pointer;
+        }
+    }
+
+    &:nth-child(3) {
+        position:relative;
+        top:-57px;
+        left:88%;
+        width:20px;
+
+        &:hover {
+            cursor:pointer;
+        }
+    }
+
+    & .fas {
+        font-size:18px;
+    }
+
+    & span {
+        padding:10px;
+    }
+}
+
+// message 
+.timeline > .message {
+    opacity:0;
+    top:-40px;
+    margin:auto;
+    max-width:400px;
+}
+
+
+
+

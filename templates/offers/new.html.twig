@@ -1,0 +1,27 @@
+{% extends 'base-company.html.twig' %}
+
+{% block title %} {{ parent() }} - Emploi {% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6">
+            <h1 class="m-0">Créer une Annonce</h1> <br>
+            <a href="{{ path('offers_company_index', {id:company.id}) }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
+                <span class="btn-label"><i class="fa fa-chevron-left"></i></span>
+                Revenir 
+            </a>
+        </div>
+    </div>
+</div> <br>
+
+{% for message in app.flashes('success') %}
+  <div class="alert alert-success">
+      {{ message }}
+  </div>
+{% endfor %}
+
+{{ include('offers/_form.html.twig') }}
+
+{% endblock %}

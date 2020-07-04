@@ -1,0 +1,104 @@
+// media queries for student profil 
+
+@import "../../components/media-queries-profile";
+
+@media all and (max-width:1024px)
+{
+    .fa-user-check, .fas.fa-edit {
+        display:none;
+    }
+}
+
+@media all and (max-width: 1000px) {
+
+    .timeline::before {
+        width:97%;
+    }
+
+    .time-icon:nth-child(3) {
+        left:93%;
+    }
+}
+
+@media all and (max-width: 700px) {
+
+    .ul-ul {
+        display:flex;
+        flex-direction:row;
+        list-style-type:none;
+    }
+
+     /* tables */
+     .table-responsive {
+        overflow:scroll;
+    }
+   
+    .Password.card {
+        border:0px;
+        padding:0px;
+    }
+
+    .row-top {
+        height:100%;
+    }
+
+    .col-timeline {
+        margin-top:30px;
+        height:100%;
+        margin-bottom:70px;
+    }
+
+    .time-icon:first-child {
+        top:87px;
+    }
+
+    .time-icon:nth-child(2) {
+        left:40%;
+        top:40px;
+    }
+
+    .time-icon:nth-child(3) {
+        left:88%;
+        top:-6px;
+    }
+
+    .timeline::before {
+        width:97%;
+        top:100px;
+    }
+
+    .message-fourth {
+        opacity:1;
+        display:block;
+        top:120px;
+        left:-25px;
+    }
+
+    .timeline > .message {
+        top:100px;
+        margin:auto;
+        max-width:400px;
+    }
+}
+
+@media all and (max-width: 450px) {
+
+    .timeline::before {
+        width:97%;
+        top:100px;
+    }
+
+    .time-icon:nth-child(2) {
+        left:37%;
+        // top:40px;
+    }
+
+    .time-icon:nth-child(3) {
+        left:83%;
+    }
+
+    // cards padding
+    .card.card-primary {
+        padding:15px;
+    }
+}

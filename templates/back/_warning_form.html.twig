@@ -1,0 +1,49 @@
+ <div id="form-show" class="warningform">
+    <div class="warningform__form">
+
+        <div>
+            <h4>Signaler les Problème</h4>
+            <p>Cochez les problèmes et envoyez le mail</p>
+        </div>
+    
+        <form method="post" action="/warning/{{ app.request.get('_route') }}" class="form" id="warning-form">
+            {# user email #}
+            <div class="form-group" style="margin-top:40px;">
+                <label> Email</label>
+                <input type="text" class="form-control" id="email" name="email">
+            </div>
+            {# user docs #}
+            <div class="form-group" style="margin-top:40px;">
+                <div class="warning-group">
+                    <input type="checkbox" class="form-control check-documents" name="resume">
+                    <p class="check-documents-label"> CV</p>
+                </div>
+                <div class="warning-group">
+                    <input type="checkbox" class="form-control check-documents" name="idCard">
+                    <p class="check-documents-label"> Carte d'identite</p>
+                </div>
+                <div class="warning-group">
+                    <input type="checkbox" class="form-control check-documents" name="studentCard"> 
+                    <p class="check-documents-label">Carte d'etudiant</p>
+                </div>
+                <!-- <div class="warning-group">
+                    <input type="checkbox" class="form-control check-documents" name="proofHabitation">
+                    <p class="check-documents-label">Justificatif de domicile</p>
+                </div> -->
+                <div class="warning-group">
+                    <input type="checkbox" class="form-control check-documents" name="siret">
+                    <p  class="check-documents-label">SIRET</p>
+                </div>
+            </div>
+             {# admin message #}
+            <div class="form-group">
+                <label class="label"> Message (facultatif)</label>
+                <textarea class="form-control" id="message" rows="5" name="message"></textarea>
+            </div>
+
+            <input type="hidden" name="_token" value="{{ csrf_token('warning' ~ app.user.id) }}">
+
+            <button class="btn btn-primary" type="submit">Envoyer</button>
+        </form>
+    </div>
+</div>

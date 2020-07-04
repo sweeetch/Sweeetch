@@ -1,0 +1,256 @@
+{# show recruit state #}
+{% extends 'base-school.html.twig' %}
+
+{% block title %} {{ parent() }} - Ecoles {% endblock %}
+{% block body %}
+{# modal message #}
+<div id="help-1" class="modal">
+    <div class="container" style="text-align:justify;">
+  
+        <p><strong>L'Etat</strong> correspond à l'état du recrutement : </p>
+        <ul style="list-style-type:none;display:flex;">
+          <li style="margin-left:5px;"><span class="badge bg-secondary">Ouvert</span></li>
+          <li style="margin-left:5px;"><span class="badge bg-primary">Candidats : 1</span></li>
+          <li style="margin-left:5px;"><span class="badge bg-warning">En Attente</span></li>
+          <li style="margin-left:5px;"><span class="badge bg-info">A Confirmer</span></li>
+        </ul><br>
+        <ul>
+          <li><span class="badge bg-secondary">Ouvert</span> signifie que personne n'est encore recruté sur cette annonce et que les candidats peuvent postuler</li><br>
+          <li><span class="badge bg-primary">Candidats : 1</span> vous indique qu'il y a des candidats pour votre annonce et combien ils sont</li><br>
+          <li><span class="badge bg-warning">En Attente</span> signifie que vous avez recruté un candidat sur cette mission et qu'il doit maintenant accepter ou refuser</li><br>
+          <li><span class="badge bg-info">A Confirmer</span> signifie que l'élève a accepté votre offre et que le temps des inscriptions est maintenant venu !</li><br>
+        </ul>
+  
+        <p>Une fois l'inscription confirmée, elle est immediatement marqué comme "terminée" et consultable en bas de page</p><br>
+      
+        <p style="font-weight:900;">Bon Travail !</p>
+  
+    </div> 
+</div>
+{# title #}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6">
+            <h1 class="m-0 titles-front">{{ study.title }}</h1> <br>
+            <div>
+                <a href="{{ path('school_studies_index', {id:study.school.id}) }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
+                    <span class="btn-label"><i class="fa fa-chevron-left"></i></span>
+                    Revenir 
+                </a>
+            </div>
+        </div>
+    </div>
+</div> <br>
+{# success or error message #}
+{% for message in app.flashes('success') %}
+<div class="alert alert-success">
+    {{ message }}
+</div>
+{% endfor %}
+
+{% for message in app.flashes('error') %}
+<div class="alert alert-danger">
+    {{ message }}
+</div>
+{% endfor %}
+{# study details #}
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card" id="card-1">
+                <div class="card-header">
+                    <p class="card-title" style="color:#FFC756 !important; font-weight:900;font-size:22px;">Détail du cursus</p>
+    
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus" style="color:#B5B7B9;"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-responsive card-body">
+                    <table class="table offers-show col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                        <tbody>
+                            <tr>
+                                <th>Domaine</th>
+                                <td>{{ study.domain }}</td>
+                            </tr>
+                            <tr>
+                                <th>Titre</th>
+                                <td>{{ study.title }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="card description" style="padding:10px;">
+                        <h5 class="mb-3">Description</h5>
+                        <p>{{ study.description |raw }}</p>
+                    </div>     
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# candidates #}
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-responsive-table">
+                <div class="card-header">
+                    <h3 class="card-title" style="font-weight:900;font-size:22px;">Candidatures</h3>
+                    <a href="#help-1" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                        <i class="fas fa-question-circle"></i>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <table id="example1" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Date</th>
+                                <th>Etat</th>
+                                <th>Actions</th>
+                            </tr>
+                            </tr>
+                        </thead>
+                        <tbody>
+        
+                            {% for recruit in recruit %}
+                            <tr>
+                                <td><a href="{{ path('show_student_applied', {id:recruit.student.id, school:school.id, study:study.id}) }}">{{ recruit.student.Name }} {{ recruit.student.lastName }}</a></td>
+                                <td>Le {{ recruit.dateRecruit|date("d/m/Y à g\\hi") }}</td>
+                                <td> <span class="badge badge-secondary right" title="candidatures">Ouverte</span></td>
+                                <td>
+                                    <div class="btn-group">
+                                        {% if recruit.hired == false and recruit.agree == false and recruit.finished == false %}
+                                        <form method="post" action="{{ path('recruit_hire', { id:recruit.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir embaucher cet étudiant ?');">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('hire' ~ recruit.id) }}">
+                                            <button class="btn btn-success btn-sm">
+                                                <i class="fas fa-user-check" title="Embaucher"></i>
+                                                Recruter
+                                            </button>
+                                        </form>
+                                        <form method="post" action="{{ path('recruit_refuse', {'id': recruit.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir refuser cette candidature ?');">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('refuse' ~ recruit.id) }}">
+                                            <button class="btn btn-danger btn-sm">
+                                                <i class="fas fa-times"></i>
+                                                Refuser
+                                            </button>
+                                        </form>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+        
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+{# in progress #}
+            <div class="card card-responsive-table">
+                <div class="card-header">
+                    <h3 class="card-title" style="font-weight:900;font-size:22px;">Inscriptions en cours</h3>
+                    <a href="#help-1" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                        <i class="fas fa-question-circle"></i>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Date</th>
+                                <th>Etat</th>
+                                <th>Actions</th>
+                            </tr>
+                            </tr>
+                        </thead>
+                        <tbody>
+    
+                        {% for process in process %}
+                            <tr>
+                                <td><a href="{{ path('show_student_applied', {id:process.student.id, school:school.id, study:study.id}) }}">{{ process.student.Name }} {{ process.student.lastName }}</a></td>
+                                <td>Le {{ process.dateRecruit|date("d/m/Y à g\\hi") }}</td>
+                                <td>
+                                    {% if process.hired == true %}
+                                    <span class="badge bg-warning">En attente de validation</span>
+                                    {% elseif process.agree == true %}
+                                    <span class="badge bg-info">A Finaliser</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        {% if process.hired == true %}
+                                        <button class="btn-icon-form btn-icon btn-warning" title="En attente d'acceptation de l'étudiant">
+                                            <i class="fas fa-hourglass-start"></i>
+                                        </button>
+                                        {% elseif process.agree == true %}
+                                        <form method="post" class="btn-icon-form" action="{{ path('recruit_finish', { id:process.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir commencer l\'inscription ?');">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('finish' ~ process.id) }}">
+                                            <button class="btn btn-info btn-sm">
+                                                <i class="far fa-stop-circle"></i>
+                                                Finaliser le recrutement
+                                            </button>
+                                        </form>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+    
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+{# finished #}
+            <div class="card card-responsive-table">
+                <div class="card-header">
+                    <h3 class="card-title" style="font-weight:900;font-size:22px;">Inscriptions Terminées</h3>
+                    <a href="#help-1" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                        <i class="fas fa-question-circle"></i>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <table id="example3" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Date</th>
+                                <th>Etat</th>
+                                <th>Actions</th>
+                            </tr>
+                            </tr>
+                        </thead>
+                        <tbody>
+    
+                    {% for finished in finished %}
+                    <tr>
+                        <td><a href="{{ path('show_student_applied', {id:finished.student.id, school:school.id, study:study.id}) }}">{{ finished.student.Name }} {{ finished.student.lastName }}</a></td>
+                        <td>Le {{ finished.dateFinished|date("d/m/Y à g\\hi") }}</td>
+                        <td><span class="badge bg-success">Terminée</span></td>
+                        <td></td>
+                    </tr>
+                    {% endfor %}
+    
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+    $(document).ready(function() {
+        $('#card-1').CardWidget('toggle');
+    });
+</script>
+
+{% endblock %}

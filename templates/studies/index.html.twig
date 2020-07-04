@@ -1,0 +1,188 @@
+{# index of studies by school #}
+
+{% extends 'base-school.html.twig' %}
+
+{% block title %} {{ parent() }} - Ecoles {% endblock %}
+
+{% block body %}
+
+{% if is_granted('ROLE_SUPER_SCHOOL') %} 
+{# modal #}
+<div id="help-1" class="modal">
+    <div class="container" style="text-align:justify;">
+  
+        <p><strong>L'Etat</strong> correspond à l'état du recrutement : </p>
+        <ul style="list-style-type:none;display:flex;">
+          <li style="margin-left:5px;"><span class="badge bg-secondary">Ouvert</span></li>
+          <li style="margin-left:5px;"><span class="badge bg-primary">Candidats : 1</span></li>
+          <li style="margin-left:5px;"><span class="badge bg-warning">En Attente</span></li>
+          <li style="margin-left:5px;"><span class="badge bg-info">A Confirmer</span></li>
+        </ul><br>
+        <ul>
+          <li><span class="badge bg-secondary">Ouvert</span> signifie que personne n'est encore recruté sur cette annonce et que les candidats peuvent postuler</li><br>
+          <li><span class="badge bg-primary">Candidats : 1</span> vous indique qu'il y a des candidats pour votre annonce et combien ils sont</li><br>
+          <li><span class="badge bg-warning">En Attente</span> signifie que vous avez recruté un candidat sur cette mission et qu'il doit maintenant accepter ou refuser</li><br>
+          <li><span class="badge bg-info">A Confirmer</span> signifie que l'élève a accepté votre offre et que le temps des inscriptions est maintenant venu !</li><br>
+        </ul>
+  
+        <p>Une fois l'inscription confirmée, elle est immediatement marqué comme "terminée" et consultable en bas de page</p><br>
+      
+        <p style="font-weight:900;">Bon Travail !</p>
+  
+    </div> 
+</div>
+{# title #}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6">
+            <h1 class="m-0">Parcours scolaires</h1> <br>
+            <a href="{{ path('studies_new', {school: school.id}) }}" class="btn btn-success">Nouveau parcours</a>
+        </div>
+    </div>
+</div> <br>
+{# error or success message #}
+{% for message in app.flashes('success') %}
+<div class="alert alert-success">
+    {{ message }}
+</div>
+{% endfor %}
+
+{% for message in app.flashes('error') %}
+<div class="alert alert-danger">
+    {{ message }}
+</div>
+{% endfor %}
+{# list student #}
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-responsive-table">
+                <div class="card-header">
+                    <h3 class="card-title" style="font-weight:900;font-size:22px;">Candidatures</h3>
+                </div>
+                <div class="card-body">
+                    <table id="school1" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Titre</th>
+                                <th>Domaine</th>
+                                <th>Situation 
+                                    <a href="#help-1" rel="modal:open" class="badge " title="aide" style="color:#8e8e8e;">
+                                    <i class="fas fa-question-circle"></i>
+                                    </a>
+                                </th>
+                                {# <th>Actions</th> #}
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for study in studies %}
+                            <tr>
+                                {# <td><a href="{{ path('school_studies_show', {'id': study.id, school_id: study.school.id }) }}">{{ study.title }}</a></td> #}
+                                <td><a href="{{ path('studies_edit', {'id': study.id, school_id: study.school.id }) }}">{{ study.title }}</a></td>
+                                <td>{{ study.domain }}</td>
+                                <td>
+                                {# vars #}
+                                {% set hired = [] %}
+                                {% set agree = [] %}
+                                {% set finished = [] %}
+                                {% set refused = [] %}
+                                {% set unavailable = [] %}
+                                {# array #}
+                                {% for study in study.recruits %}
+                                    {# hired #}
+                                    {% if study.hired == true %}
+                                    {% set hired = hired|merge([{ hired: study }]) %}
+                                    {% endif %}
+                                    {# agree #}
+                                    {% if study.agree == true %}
+                                    {% set agree = agree|merge([{ agree: study }]) %}
+                                    {% endif %}
+                                    {# confirmed #}
+                                    {% if study.finished == true %}
+                                    {% set finished = finished|merge([{ finished: study }]) %}
+                                    {% endif %}
+                                    {# refused #}
+                                    {% if study.refused == true %}
+                                    {% set refused = refused|merge([{ refused: study }]) %}
+                                    {% endif %}
+                                    {# unavailable #}
+                                    {% if study.unavailable == true %}
+                                    {% set unavailable = unavailable|merge([{ unavailable: study }]) %}
+                                    {% endif %}
+                                {% endfor %}
+                                {# total #}
+                                {% set minus = refused|length + unavailable|length + finished|length %}
+                                {# loop #}
+                                {% if agree | length == 0 %}
+                                    {% if hired | length == 0 %}
+                                        {% if study.recruits | length == 0 or study.recruits | length - minus == 0 %}
+                                        <span class="badge badge-secondary right" title="candidatures">Ouvert</span>
+                                        {% else %}
+                                        <span class="badge badge-primary right" title="candidatures">Candidats : {{ study.recruits | length - minus }} </span>
+                                        {% endif %}
+                                    {% else %}
+                                    <span class="badge badge-warning right" title="candidatures">En Attente</span>
+                                    {% endif %}
+                                {% else %}
+                                <span class="badge badge-info right" title="candidatures">A Confirmer</span>
+                                {% endif %}
+                                </td>
+                                {# <td>
+                                    <a href="{{ path('studies_edit', {'id': study.id, school_id: study.school.id }) }}">
+                                        <button  title="Modifier" style="color:white;" class="btn btn-info btn-sm"> 
+                                            <i class="fas fa-edit"></i>
+                                            Modifier
+                                        </button>
+                                    </a>
+                                </td> #}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <br><br>
+                <div class="col-lg-8 col-sm-12 col-md-12">
+                    <div class="info-box mb-3 overflow-box">
+                    <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-hourglass-start"></i></span>
+
+                        <div class="info-box-nopage info-box-content">
+                            <span class="info-box-text">Votre compte doit être comfirmé pour vous permettre de poster des annonces</span>            
+                        </div>
+                        
+                    </div>
+                </div> 
+            {% endif %}
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block javascripts %}
+
+{{ parent() }}
+<script>
+    $(function () {
+        $("#school1").DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "info": false,
+            "autoWidth": false,
+            "responsive": true,
+            "language": {
+            "emptyTable": "Aucune inscription pour le moment",
+            "paginate": {
+                "previous": "Précédent",
+                'next':'Suivant'
+                }
+            }
+        });   
+    });
+</script>
+
+{% endblock %}

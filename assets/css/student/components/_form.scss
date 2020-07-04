@@ -1,0 +1,42 @@
+// student profil forms 
+
+input[type="file"] {
+    opacity:1;
+    position: absolute;
+    top: 20px;
+    width:1px;
+    height:1px;
+}    
+
+.form-error {
+
+    & ul {
+        padding-left:0px;
+    }
+
+    & ul li {
+        list-style-type:none;
+        font-size:12px;
+        color:#EE153E;
+    }
+}
+
+.form-group {
+
+    max-height:95px;
+
+    & ul {
+        padding-left:0px;
+    }
+
+    & ul li {
+        list-style-type:none;
+        font-size:12px;
+        color:#EE153E;
+    }
+}
+
+.form-control div {
+    position:relative;
+    left:-10px;
+}

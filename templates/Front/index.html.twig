@@ -1,0 +1,297 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %} {{ parent() }} - home {% endblock %}
+
+{% block stylesheets %}
+    <!-- import assets from assets/js/app.js -->
+    {{ parent() }}
+
+    <link href="{{ asset('lib/ionicons/css/ionicons.min.css') }}" rel="stylesheet">
+    <!-- Main Stylesheet File -->
+
+{% endblock %}
+
+
+{% block body %}
+
+<!--==========================
+  Header
+  ============================-->
+  <header id="header">
+
+    <div class="container" id="customer-header" style="max-width:1300px;">
+      <div class="logo float-left" style="display:flex;">
+        {# <div style="padding-left: 10px;display: flex;align-items: center;">
+          <h1>Sweeetch</h1>
+        </div> #}
+        <div>
+          <a href="#header" class="scrollto"><img src="{{ asset('build/logo.png') }}" alt="" class="img-fluid"></a>
+        </div>
+      </div>
+
+      <nav class="main-nav float-right d-none d-lg-block">
+        <ul>
+          <li class="active"><a href="{{ path('homepage') }}">Accueil</a></li>
+          <!-- <li><a href="#about">Sweeetch</a></li>
+          <li><a href="#why-us">Nos fonctionnalités</a></li> -->
+          <li><a href="{{ path('offers_index') }}">Alternances</a></li>
+          <li><a href="{{ path('studies_candidate_index') }}">Formations</a></li>
+              
+            {% if is_granted('ROLE_USER')  %}
+                {% if is_granted('ROLE_ADMIN') %}
+                  <li><a href="{{ path('admin', {id:app.user.id}) }}">ADMIN</a></li>
+                {% elseif  is_granted('ROLE_STUDENT') %}
+                  <li><a href="{{ path('student_show', {'id': app.user.student.id}) }}">MON PROFILE</a></li>
+                {% elseif  is_granted('ROLE_COMPANY') %}
+                  <li><a href="{{ path('company_show', {'id': app.user.company.id}) }}">MON ENTREPRISE</a></li>
+                  {% elseif  is_granted('ROLE_SCHOOL') %}
+                  <li><a href="{{ path('school_show', {'id': app.user.school.id}) }}">MON ECOLE</a></li>
+                {% endif %}
+                <li><a href="/logout">DECONNEXION</a></li>
+            {% else %}
+              <li class="drop-down"><a>S'Inscrire</a> 
+                <ul>
+                    <li><a href="/student/new">Etudiants</a></li>
+                    <li><a href="/company/new">Entreprises</a></li>
+                    <li><a href="/school/new">Ecoles</a></li>
+                </ul>
+              </li>
+              <li><a href="/login">Connexion </a></li>
+
+            {% endif %}   
+                     
+        </ul>
+      </nav><!-- .main-nav -->
+      
+    </div>
+  </header><!-- #header -->
+
+  <!--==========================
+    Intro Section /*  ici j'écris quoi ?*/
+  ============================-->
+  <section id="intro" class="clearfix">
+    <div class= "container d-flex h-100">
+      <div class="row justify-content-center align-self-center" style="display:flex; justify-content:center; align-items:center;">
+        <div class="col-md-6 intro-info order-md-first order-last" >
+          <h2>La plateforme qui révolutionne la recherche d'alternance !</h2>
+
+    
+          <div>
+            <a href="{{ path('student_new') }}" class="btn-get-started scrollto" style="display:block;">Inscrivez-vous</a>
+          </div>
+        </div>
+  
+        <div class="col-md-6 intro-img order-md-last order-first">
+            <img src="{{ asset('build/CV.png') }}" alt="Sweeetch alternance" class="img-fluid" id="header-image">
+
+        </div>
+      </div>
+
+    </div>
+  </section><!-- #intro -->
+
+  <main id="main">
+
+    <!--==========================
+      A PROPOS DE NOUS 
+    ============================-->
+    <section id="about">
+
+      <div class="container"style="max-width:85%" id="padding-1">
+        <div class="row" id="j-c">
+
+          <div class="col-lg-5 col-md-6">
+            <div class="why-us-img">
+              <img src="{{ asset('build/Image-2.png') }}" alt="" class="img-fluid">
+
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6" id="padding-2">
+            <div class="about-content">
+              <h2>Sweeetch, dis m’en plus sur toi ! </h2>
+              <h3>Une app créée par 2 anciens alternants qui ont connu la pénibilité d’une recherche d’alternance !</h3>
+              <p>Nous te donnons le pouvoir de choisir ton propre futur : consulte et postule sur toutes les offres d’alternance de nos partenaires, sans aucun intermédiaire. A toi de faire la différence ! 🚀</p>
+              <p> Marketing, Ressources humaines, Mode, Communication, Gestion d’entreprise, Management, Métiers du sport, de l’agro-alimentaire… C’est simple, tu trouveras forcément ton bonheur ! 😀</p>
+              <p> Nous sélectionnons aussi pour toi les écoles les plus adaptées à la direction que tu souhaites donner à ta carrière professionnelle. Deviens un Sweeetcher ! 🔥</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section><!-- #about -->
+
+    <!--==========================
+      Pourquoi nous choisir ?
+    ============================-->
+    <section id="why-us" class="wow fadeIn">
+      <div class="container-fluid">
+        
+        <header class="section-header">
+          <h3>Conçue pour les alternants  </h3>
+          <p>Conscient de tous les obstacles qui freinent ta recherche d'alternance, On a décidé de créer une plateforme simple & rapide afin que tu puisses avoir l'esprit tranquille !
+           </p>
+        </header>
+
+        <div class="row">
+
+          <div class="col-lg-5">
+            <div class="why-us-img"id="custom-img">
+              <img src="{{ asset('build/sansbord.png') }}" alt="" id="custom" class="img-fluid">
+            </div>
+          </div>
+
+           <div class="col-lg-7" id="padding-3"> 
+            <div class="why-us-content" style="max-width:90% !important">
+    
+              <div class="features wow bounceInUp clearfix">
+                <i class="fa fa-search"></i>
+                <h4>Deviens un chasseur d'alternance </h4>
+                <p>Notre équipe t'apporte son expertise et ses conseils jusqu'à l'obtention de ton alternance. </p>
+              </div>
+
+              <div class="features wow bounceInUp clearfix">
+                <i class="fa fa-globe"></i>
+                <h4>Profite de tous les secteurs d'activité</h4>
+                <p>Marketing, Ressources humaines, Mode, Communication, Gestion d’entreprise, Management... en contrat d'apprentissage ou contrat de professionnalisation.
+              </div>
+              
+              <div class="features wow bounceInUp clearfix">
+                <i class="fa fa-fast-forward"></i>
+                <h4>Une alternance simple & rapide </h4>
+                <p> Toutes les démarches sur une même plateforme !  Ton entreprise et ton école en quelques clics.</p>
+              </div>
+              
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+     <!--==========================
+      Features section APPP
+    ============================-->
+    <section class="section-bg" id="features">
+      <div class="container">
+
+        <div class="section-header">
+          <h3>Nos Partenaires</h3>
+        </div>
+
+        <div class="d-flex col-lg-12 wow fadeInUp">
+          <div class="member col-lg-2 col-sm-5 col-xs-12">
+            <img src="{{ asset('build/occitanie.jpg') }}" class="img-fluid" alt="">
+          </div>
+          <div class="member col-lg-2 col-sm-5 col-xs-12">
+            <img src="{{ asset('build/mission.png') }}" class="img-fluid" alt="">
+          </div>
+          <div class="member col-lg-2 col-sm-5 col-xs-12">         
+            <img src="{{ asset('build/groupe-alternance.png') }}" class="img-fluid" alt="">
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!--==========================
+    Footer
+  ============================-->
+  <footer id="footer" class="section-bg">
+    <div class="footer-top">
+      <div class="container">
+
+        <div class="row">
+
+          <div class="col-lg-6">
+
+            <div class="row">
+                <div class="col-sm-6">
+                  <div class="footer-links">
+                    <h4>
+                        Liens utiles</h4>
+                    <ul>
+                      <li><a href="#">Acceuil</a></li>
+                      <li><a href="https://blog.sweeetch.com/sweeetch-blog" target="_blank">Blog</a></li>
+                      <li><a href="#">À propos de nous</a></li>
+                      <li><a href="#">Services</a></li>
+                      <li><a href="{{ path('cgu') }}">Conditions d'utilisation</a></li>
+                      <li><a href="#">Politique de confidentialité</a></li>
+                      <li><a href="{{ path('faq') }}">FAQ</a></li>
+                    </ul>
+                  </div>
+                  <div class="footer-links">
+                    </div>
+                  <div class="social-links">
+                    <a href="https://twitter.com/SweeetchA" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a>
+                    <a href="https://www.facebook.com/sweeetch.ton.alternance/" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a>
+                    <a href="https://fr.linkedin.com/company/sweetchmontpellier?trk=public_profile_topcard_current_company" target="_blank" class="linkedin"><i class="fa fa-linkedin"></i></a>
+                    <a href="https://www.instagram.com/sweeetch_alternance/" target="_blank" class="instagram"><i class="fa fa-instagram"></i></a>
+                  </div>
+
+                </div>
+
+            </div>
+
+          </div>
+
+          <div class="col-lg-6">
+
+            <div class="form">
+              
+              <h4>MESSAGE</h4>
+              <p>Si vous avez des questions à propos de Sweeetch, que vous soyez une entreprise à la recherche d’un alternant ou un étudiant en quête d’une alternance,
+
+                 n’hésitez pas à nous contacter en remplissant le formulaire ci-dessous et nous vous répondrons dans les plus brefs délais.
+              </p>
+              <form action="{{ path('contact') }}" method="post" role="form" class="contactForm">
+                <div class="form-group">
+                  <input type="text" name="name" class="form-control" id="name" placeholder="NOM Prénom" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                  <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Email" data-rule="email" data-msg="Please enter a valid email" />
+                  <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" name="subject" id="subject" placeholder="Objet" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
+                  <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                  <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                  <div class="validation"></div>
+                </div>
+
+                <div id="sendmessage">Message envoyé. Merci !</div>
+                <div id="errormessage"></div>
+
+                <div class="text-center"><button type="submit" title="Send Message">Envoyer</button></div>
+              </form>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong>SWEEETCH</strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+
+        Fait avec ❤️ par d'anciens alternants</a>
+      </div>
+    </div>
+  </footer><!-- #footer -->
+
+  <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+{% endblock %}

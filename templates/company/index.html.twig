@@ -1,0 +1,79 @@
+{# show companies to admin #}
+
+{% extends 'base-back.html.twig' %}
+
+{% block title %} {{ parent() }} - Admin {% endblock %}
+
+{% block body %}
+{# title #}
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6 container-flex">
+                <h1 class="m-0 text-dark">Entreprises</h1>
+            </div>
+        </div>
+    </div>
+</div>
+{# success message #}
+{% for message in app.flashes('success') %}
+  <div class="alert alert-success">
+      {{ message }}
+  </div>
+{% endfor %}
+{# company tables #}
+<div class="card">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table m-0">
+          <thead>
+            <tr>
+                <th>Ecole</th>
+                <th>Email</th>
+                <th>Siret</th>
+                <th>statu</th>
+                <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for company in companies %}
+            <tr>
+                <td><strong><a href="{{ path('company_show', {'id': company.id}) }}" >{{ company.companyName }}</a></strong></td>
+                <td class="email-{{ company.user.id }}">{{ company.user.email }} </td>
+                <td><strong>{{ company.siret }}</strong></td>
+                <td>{% if company.user.confirmed == false %}<span class="badge badge-warning">A confirmer</span>{% else %}<span class="badge badge-success">Confirmé</span>{% endif %}</td>
+                <td class="table-actions">
+                  <div class="icon-group">
+                  {% if company.user.confirmed == false %}
+                  <form method="post" class="form-icon" action="{{ path('admin_confirm', {'id': company.user.id, 'from':'company_index'}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
+                      <input type="hidden" name="_token" value="{{ csrf_token('confirm' ~ company.user.id) }}">
+                      <button class="btn-icon btn-success"><i class="fas fa-check" title="confirmer le compte"></i></button>
+                  </form>
+                  {% endif %}
+                   <div class="btn-icon-form">
+                        <a href="#ex1" rel="modal:open">
+                            <i class="fas fa-exclamation-circle warning" title="signaler un probleme" data-url="{{ company.user.id }}"></i>
+                        </a>
+                    </div> 
+                    {{ include('company/_delete_form.html.twig') }}
+                    </div>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="5">Aucun Elément</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+       
+      </div>
+
+    </div>
+  </div>
+  {# pagination #}
+  <div style="max-width:100%;overflow:scroll;">{{ knp_pagination_render(companies) }}</div>
+
+</div>
+
+{% endblock %}

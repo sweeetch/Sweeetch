@@ -1,0 +1,27 @@
+// admin media queries 
+
+@media all and (max-width:767px) 
+{
+    h1 {
+        text-align:center;
+    }
+
+    .card-row:first-child {
+        padding:50px 30px;
+    }
+
+    .table th, .table td {
+        min-width: 200px;
+    }
+
+    // .ul-ul {
+    //     display:flex;
+    //     flex-direction:row;
+    //     list-style-type:none;
+    // }
+
+    .navbar-expand .navbar-nav {
+        justify-content: space-between;
+        width:100%;
+    }
+}

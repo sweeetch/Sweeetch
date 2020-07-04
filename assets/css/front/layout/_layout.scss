@@ -1,0 +1,354 @@
+.alert.alert-success {
+    background:#76C381;
+    border:1px solid #76C381;
+}
+
+.alert.alert-danger {
+    background:#FF5961AB !important;
+    border:1px solid #FF5961AB !important;
+}
+
+.login-page {
+    height:100vh;
+}
+
+.login-form {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.background {
+    height:100%;
+    min-height: 100vh;
+    width:100vw;
+    background: #f5f8fd url(/build/images/intro-bg.8f338c7b.jpg) center top no-repeat;
+    background-size:cover;
+}
+
+.background-jobs {
+    height:100%;
+    min-height: 100vh;
+    width:100vw;
+    background: #F6F8FD;
+    background-size:cover;
+}
+
+.container-jobs {
+    padding-top:15px;
+    padding-bottom:150px;
+}
+
+#row-radio {
+    margin-top:30px;
+}
+
+.custom-file-label::after {
+    content:"sélectionner"
+}
+
+ul.pagination {
+
+    display:flex;
+    justify-content:center;
+
+    & li.page-item:nth-child(1) {
+        display:none;
+    }
+
+    & li.page-item:last-child {
+        display:none;
+    }
+   
+}
+
+h1.titles-front {
+    margin-top:50px;
+}
+
+.nav-jobs {
+    display:flex !important;
+    margin-bottom:50px;
+}
+
+.description {
+    text-align:justify;
+    margin-top:30px;
+
+    & h5 {
+        font-weight:bold;
+        text-align:left;
+    }
+}
+
+.pagination-top {
+    margin-bottom:40px;
+    margin-top:40px;
+}
+
+.pagination-bottom {
+    margin-top:80px;
+}
+
+.jobs-container {
+    margin-top:80px;
+    padding-top: 20px;
+
+    & .row {
+        justify-content:center;
+    }
+
+    & .card-body-1 {
+        margin-bottom:30px;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+    }
+
+    & p {
+        text-align:justify;
+    }
+}
+
+.offers-index {
+
+    & a {
+        display:block;
+        padding:30px;
+        padding-top:20px;
+    }
+
+    & .card-header {
+        padding:0px;
+
+        & h6 {
+            padding-top: 5px;
+            padding-bottom: 5px;
+            margin-bottom:15px;
+        }
+    }
+
+    & .card-body {
+        padding-top:50px;
+    }
+}
+
+.blur {
+    filter: blur(4px);
+}
+
+.profile_picture {
+    height:2rem;
+    width:2rem;
+}
+
+#intro .intro-info .btn-get-started, #intro .intro-info .btn-services {
+    display: block;
+    width: 200px;
+    margin: auto;
+}
+
+.d-flex {
+    display:flex;
+    justify-content:center;
+
+    & .member {
+        margin-right:15px;
+
+        & img {
+            border:1px solid black;
+        }  
+    }
+}
+
+#no-offers {
+    border:1px solid rgba(0, 0, 0, 0.125);
+    border-radius:5px;
+    margin-top:30px;
+    max-width:300px;
+    margin:auto;
+}
+
+.job-offer {
+    margin-left:15px;
+    margin-right:15px;
+    width:450px;
+    padding-top:45px;
+}
+
+.img-offers {
+   width: 200px;
+   height: 150px;
+}
+
+// new offers index 
+
+.job-grid.border {
+    box-shadow: none;border: 2px solid #e8ecec;float: left;
+    width: 100%;
+    background: #ffffff;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: 0px 2px 4px rgba(0,0,0,0.06);
+    -moz-box-shadow: 0px 2px 4px rgba(0,0,0,0.06);
+    -ms-box-shadow: 0px 2px 4px rgba(0,0,0,0.06);
+    -o-box-shadow: 0px 2px 4px rgba(0,0,0,0.06);
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.06);
+    padding: 0px 20px;
+    margin-top: 30px;
+
+    & .job-title-sec {
+        float: left;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #e8ecec;
+
+        & .c-logo {
+            float: left;
+            width: 100%;
+            margin-top: 50px;
+            margin-bottom: 30px;
+        }
+    }
+
+    & .job-lctn {
+        display: table-cell;
+        vertical-align: middle;
+        font-family: open Sans;
+        font-size: 13px;
+        color: #888888;
+        line-height: 23px;
+        width: 25%;    float: left;
+        width: auto;
+        font-size: 13px;
+        margin: 18px 0;
+    }
+
+    & .a-button {
+        float: right;
+        font-family: Open Sans;
+        font-size: 13px;
+        color: #fb236a;
+        border: 1px solid #fb236a;
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        -ms-border-radius: 20px;
+        -o-border-radius: 20px;
+        border-radius: 20px;
+        padding: 6px 14px;
+        letter-spacing: 0px;
+        margin: 16px 0;
+        display: inline-block;
+    }
+}
+
+// offers description
+
+.job-single-sec {
+    float: left;
+    width: 100%;
+}
+
+.job-single-head {
+    float: left;
+    width: 100%;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #e8ecec;
+    display: table;
+    margin-bottom:30px;
+}
+
+.job-thumb {
+    width: 200px;
+    height: 100px;
+    overflow: hidden;
+    position: relative;    display: table-cell;
+    vertical-align: top;
+    width: 107px;
+
+    & img {
+        width: 200px;
+        height: 100px;
+        max-width: 300px;
+        max-height:120px;
+        object-fit: cover;
+    }
+}
+
+.job-head-info {
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 25px;
+
+    & h4 {
+        text-align:left;
+    }
+
+    & span {
+        float: left;
+        margin: 0;
+        margin-top: 0px;
+        margin-right: 0px;
+        font-size: 13px;
+        margin-right: 40px;
+        color: #888;
+        margin-top: 11px;
+    }
+
+    & p {
+        float: left;
+        margin: 0;
+        margin-top: 0px;
+        margin-right: 0px;
+        font-size: 13px;
+        margin-right: 40px;
+        color: #888;
+        margin-top: 11px;
+    }
+}
+
+.job-details {
+
+    float: left;
+    width: 100%;
+    padding-top: 20px;
+
+    & p {
+        float: left;
+        width: 100%;
+        font-size: 13px;
+        color: #888888;
+        line-height: 24px;
+        margin: 0;
+        margin-bottom: 19px;
+    }
+
+    & h3 {
+        float: left;
+        width: 100%;
+        font-size: 18px;
+        font-weight: 500;
+        color: #202020;
+        margin-bottom: 15px;
+        margin-top: 10px;text-align:left;
+    }
+
+    & ul {
+        float: left;
+        width: 100%;
+        font-size: 13px;
+        color: #888888;
+        line-height: 24px;
+        margin: 0;
+        margin-bottom: 19px;
+    }
+}
+
+
+
+ 

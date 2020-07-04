@@ -1,0 +1,405 @@
+{# student homepage #}
+
+{% extends 'base-student.html.twig' %}
+
+{% block title %} {{ parent() }} - Etudiants {% endblock %}
+
+{% block body %}
+
+    <div class="row row-top">
+
+        <div class="col-lg-6 col-sm-12">
+
+            <div class="content-title">
+                <h1>Tableau de Bord</h1>
+            </div>
+            {# success or error message #}
+            {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {# account state #}
+            <div class="row account-state">
+                {% if student.user.confirmed == true %}
+                <div class="col-12 col-sm-6 col-md-6">
+                    <div class="info-checked info-box info-success mb-3">
+                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-check"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Etat du compte : </span>
+                            <span class="info-box-number">Validé par Sweeetch</span>
+                        </div>
+                    </div>
+                </div>
+                {% else %} 
+                <div class="col-lg-12 col-sm-12 col-md-12">
+                    <div class="info-box mb-3">
+                    <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-hourglass-start"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Etat du Compte : </span>
+                            <span class="info-box-number">En cours de confirmation</span>
+                        </div>
+                        
+                    </div>
+                </div> 
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-lg-6 col-sm-12" style="position:relative;" >
+            {# account state #}
+            {% if student.user.activateToken != null %}
+            <div class="account-state" id="as-2">
+                <div style="width:100%;" id="info-bulle">
+                    <div class="info-box mb-3">
+                    <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-exclamation-triangle"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Pensez à valider votre email !</span>
+                            <span class="info-box-number"><form action="{{ path('resend_mail_student', {id:student.id}) }}" method="post"><button style="border:0px;background:white;padding:0px;text-decoration:underline;color:#00A6E7;">Renvoyer un lien de confirmation</button></form></span>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+            {% endif %}
+        </div> 
+    </div>
+
+    <div class="row card-margin">
+        <div class="col-lg-6" >
+            <div class="card col-lg-" style="padding:0px;">
+{# account info #}
+                <div class="cardBlue card-header-color card-header border-transparent">
+                    <p class="card-title">Infos du compte</p>
+    
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                      </button>
+                    </div>
+                </div>
+                
+                <div class="card-body p-0 card-dashboard">
+                    <div class="table-padding table-responsive">
+                        <table class="table m-0" id="no-border">
+                            <tr>
+                                <th>Prénom</th>
+                                <td>{{ student.lastname }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nom</th>
+                                <td>{{ student.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td>{{ student.user.email }}</td>
+                            </tr>
+                            <tr>
+                                <th>Adresse</th>
+                                <td>{{ student.adress }}, {{ student.zipCode }}, {{ student.city }}</td>
+                            </tr>
+                            <tr>
+                                <th>Téléphone</th>
+                                <td>{{ student.telNumber }}</td>
+                            </tr>
+                            <tr>
+                                <th>Permis B</th>
+                                <td>{% if student.drivingLicense == 1 %} oui {% else %} non {% endif %} </td>
+                            </tr>
+                            <tr>
+                                <th>Handicappé</th>
+                                <td>{% if student.disabled == 1 %} oui {% else %} non {% endif %} </td>   
+                            </tr>
+                            <tr>
+                                <th>Centres d'intérêt</th>
+                                <td>{{ student.interest }}</td>  
+                            </tr>
+                            <tr>
+                                <th>Loisirs</th>
+                                <td>{{ student.hobbies }}</td>  
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+{# student profil #}
+            <div class="card col-lg-12" style="padding:0px;">
+
+                <div class="cardBlue card-header-color card-header border-transparent">
+                    <p class="card-title">Profil</p>
+    
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                      </button>
+        
+                    </div>
+                </div>
+            
+                <div class="card-body p-0 card-dashboard">
+                    <div class="table-responsive">
+                        <table class="table m-0" id="no-border">
+                            <tbody>
+                                <tr>
+                                    <th>Domaine d'activité</th>
+                                    <td>{{ student.profile.domain }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Région</th>
+                                    <td>{{ student.profile.area }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+{# language #}
+            <div class="card-dashboard card col-lg-12" style="padding:0px;">
+
+                <div class="cardBlue card-header-color card-header border-transparent">
+                    <p class="card-title">Langues</p>
+    
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+            
+                <div class="card-body p-0 card-dashboard">
+                    <div class="table-responsive">
+                        <table class="table m-0" id="no-border">
+                            <thead>
+                                <tr>
+                                    <th>Langues</th>
+                                    <th>Niveau</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for languages in student.profile.languages %}
+                    
+                                <tr class="tr-border">
+                                    <td>{{ languages.languageName }}</td>
+                                    <td>{{ languages.level }}</td>
+                                </tr>
+
+                                {% else %}
+
+                                {# <tr class="border-top"> #}
+                                <tr>
+                                    <td colspan="8" class="border-top-td">Aucune langue</td>
+                                </tr> 
+
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>  
+            </div> 
+{# education #}           
+            <div class="card-dashboard col-lg-12 table-scroll" >
+
+                <div class="card" style="padding:0px;" >
+
+                    <div class="cardBlue card-header-color card-header border-transparent">
+                        <p class="card-title">Formations</p>
+        
+                        <div class="card-tools">
+                          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                          </button>
+                        </div>
+                    </div>
+                
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table m-0" id="no-border">
+                                <thead>
+                                    <tr>
+                                        <th>Titre</th>
+                                        <th>Ecole</th>
+                                        <th>Début</th>
+                                        <th>Fin</th> 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for education in student.profile.education %}
+                                    <tr class="tr-border">
+                                        <td>{{ education.title }}</td>
+                                        <td>{{ education.school }}</td>
+                                        <td>{{ education.dateStart|date("d/m/Y") }}</td>
+                                        {% if education.current == true %}
+                                        <td>  en cours </td>
+                                        {% else %}
+                                            <td>{{ education.dateEnd|date("d/m/Y") }}</td>
+                                        {% endif %}
+                                    </tr>
+                                    {% else %}
+
+                                    {# <tr class="border-top"> #}
+                                    <tr>
+                                        <td colspan="8" class="border-top-td">Aucune formation</td>
+                                    </tr> 
+
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div> 
+                    </div>  
+                </div>
+            </div>
+        </div>
+{# documents #}
+        <div class="col-lg-6">
+
+            <div class="card col-lg-12" style="padding:0px;">
+                
+                <div class="cardBlue card-header-color card-header border-transparent">
+                    <p class="card-title">Mes Documents</p>
+    
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                      </button>
+                    </div>
+                </div>
+            
+                <div class="card-body p-0 card-dashboard">
+                    <div class="table-responsive">
+                        <table class="table m-0" id="no-border">
+                            <tr>
+                                <td>Mon CV</td>
+                                <td>
+                                    <a href="{{ path('student_download_resume', { id: student.resume.id }) }}"><span class="fas fa-file-image"></span></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th-dark">Ma Carte d'identité</td>
+                                <td>
+                                    <a href="{{ path('student_download_idcard', { id: student.idCard.id }) }}"><span class="fas fa-file-image"></span></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th-dark">Ma Carte d'étudiant</td>
+                                {% if student.studentCard.id is defined %}
+                                <td>
+                                    <a href="{{ path('student_download_studentcard', { id: student.studentCard.id }) }}"><span class="fas fa-file-image"></span></a>
+                                </td>
+                                {% else %}
+                                <td>
+                                     <a href="{{ path('student_edit', {id:student.id}) }}">Ajouter un document</a>
+                                </td>  
+                                {% endif %}
+                            </tr>
+                            {# <tr>
+                                <td class="th-dark">Justificatif de domicile</td>
+                                <td>
+                                    <a href="{{ path('student_download_proofhabitation', { id: student.proofHabitation.id }) }}"><span class="fa fa-download"></span></a>
+                                </td>
+                            </tr> #}
+                        </table>
+                    </div>
+                </div>
+            </div>
+{# candidates #}
+            <div class="col-lg-12 table-scroll">
+
+                <div class="card" style="padding:0px;">
+
+                    <div class="cardBlue card-header-color card-header border-transparent">
+                        <p class="card-title">Candidatures</p>
+        
+                        <div class="card-tools">
+                          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                          </button>
+                        </div>
+                    </div>
+            
+                    <div class="card-body card-responsive-table" style="padding:0px;" >
+                        <table id="applies1" class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Mission</th>
+                                    <th>Situation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {% for applies in applies %}
+                                {# <tr class="border-top"> #}
+                                <tr>
+                                    <td><a href="{{ path('student_apply', {'id': student.id}) }}" class="action-link">{{ applies.offers.title }}</a></td>
+                                    <td>
+                                        <span class="badge badge-primary" title="Embauche en cours">ouverte</span>
+                                    </td>   
+                                </tr> 
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+{# recruits #}
+            <div class="col-lg-12 table-scroll">
+
+                <div class="card" style="padding:0px;">
+                   
+                    <div class="cardBlue card-header-color card-header border-transparent">
+                        <p class="card-title">Recrutements</p>
+        
+                        <div class="card-tools">
+                          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                          </button>
+                        </div>
+                    </div>
+                
+            
+                    <div class="card-body card-responsive-table" style="padding:0px;" >
+                        <table id="applies2" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Mission</th>
+                                        <th>Situation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for process in process %}
+                                        {% if process.offers.title is defined %}
+                                    {# <tr class="border-top"> #}
+                                    <tr>
+                                        <td><a href="{{ path('student_apply', {'id': student.id}) }}" class="action-link">{{ process.offers.title }}</a></td>
+                                        <td>
+                                            {% if process.hired == true %}
+                                                <span class="badge badge-warning" title="L'employeur attend votre validation">à valider</span>
+                                            {% elseif process.agree == true %}
+                                            <span class="badge badge-info" title="Embauche en cours">Dossier en traitement</span>
+                                            {% elseif process.confirmed == true %}
+                                                <span class="badge badge-success" title="Mission en cours. Bonne chance !">Mission confirmée</span>    
+                                            {% endif %}
+                                        </td>   
+                                    </tr> 
+                                        {% else %}
+                                        <tr>
+                                            <td colspan="8"> 
+                                                <span style="color:#FF5961;">Votre entreprise a supprimé son compte </span>
+                                                <a href="#suppr-1" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                                                    <i class="fas fa-question-circle"  style="margin-left:5px;color:#8e8e8e;"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>        
+
+{% endblock %}
+
+

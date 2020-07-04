@@ -1,0 +1,138 @@
+{# show studies to student #}
+
+{% extends 'base-front.html.twig' %}
+
+{% block title %} {{ parent() }} - Ecoles {% endblock %}
+
+{% block body %}
+
+<div class="background-jobs">
+    <div class="container container-jobs jobs-container">
+        {# title #}
+        <header id="header">
+            <div class="container" id="customer-header">
+                <nav class="main-nav d-none d-lg-block">
+                    <ul>
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <li><a href="/admin">ADMIN</a></li>
+                        {% elseif  is_granted('ROLE_STUDENT') %}
+                        <li><a href="{{ path('student_show', {'id': app.user.student.id}) }}">MON PROFILE</a></li>
+                        {% elseif  is_granted('ROLE_COMPANY') %}
+                        <li><a href="{{ path('company_show', {'id': app.user.company.id}) }}">MON ENTREPRISE</a></li>
+                        {% elseif  is_granted('ROLE_SCHOOL') %}
+                        <li><a href="{{ path('school_show', {'id': app.user.school.id}) }}">MON ECOLE</a></li>
+                        {% endif %}
+                        {% if pages is defined %}
+                        <li><a href="{{ path('studies_candidate_index', {'page':pages}) }}">Formations</a></li>
+                        {% else %}
+                        <li><a href="{{ path('studies_candidate_index', {'page':1}) }}">Formations</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        {# error and success message #}
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+        {% endfor %}
+
+        {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+        {% endfor %}
+        
+        <section>
+            <div class="block" style="margin-top:80px;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 column">
+                            <div class="job-single-sec">
+                                <div class="job-single-head" 
+                                {% if study.video is not empty %} 
+                                style="margin-bottom:70px;" 
+                                {% endif %}>
+                                    <div class="job-thumb"> 
+                                        {% if study.school.pictures.fileName is defined %}
+                                        <img src="{{ uploaded_asset(study.school.pictures.fileName) }}" alt="">
+                                        {% else %}
+                                        <img src="https://via.placeholder.com/150" alt="" >
+                                        {% endif %}
+                                    </div>
+                                    <div class="job-head-info">
+                                        <h4>{{ study.title }}</h4>
+                                        <span>{{ study.school.address }}, {{ study.school.ZipCode }}, {{ study.school.city }}</span>
+                                        <p><i class="la la-unlink"></i>{{ study.school.website }}</p>
+                                        <p><i class="la la-phone"></i> {{ study.school.telNumber }} </p>
+                                        <p><i class="la la-envelope-o"></i> <a href="#" class="__cf_email__" data-cfemail="a4c5c8cd8ad0d1c2c5cae4cecbc6ccd1cad08ac7cbc9">{{ study.school.user.email }}</a></p>
+                                    </div>
+                                </div><!-- Job Head -->
+                                {% if study.video is not empty %}
+                                <iframe width="100%" height="315" src="https://www.youtube.com/embed/{{ study.video }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="display:block;margin:auto;"></iframe>
+                                {% endif %}
+                                <div class="job-details" 
+                                {% if study.video is not empty %} 
+                                style="float:left;width:100%;padding-top:50px;" 
+                                {% else %} 
+                                style="float:left;width:100%;"
+                                {% endif %}> 
+                                {% if study.title1 is empty and study.description is empty 
+                                    and  
+                                    study.title2 is empty and study.description2 is empty
+                                    and 
+                                    study.title3 is empty and study.description3 is empty
+                                %}
+                                    <span style="color:darkred;font-weight:900;text-align:center;width:100%;display:block;">Pas encore de contenu</span> 
+                                {% else %}
+                                    {% if study.title1 is not empty %} 
+                                        <h3>{{ study.title1 | raw  }}</h3>
+                                    {% endif %}
+                                    {% if study.description is not empty %} 
+                                        <p>{{ study.description | raw }}</p>
+                                    {% endif %}
+                                    {% if study.title2 is not empty %} 
+                                        <h3>{{ study.title2 | raw  }}</h3>
+                                    {% endif %}
+                                    {% if study.description2 is not empty %} 
+                                        <p>{{ study.description2 | raw }}</p>
+                                    {% endif %}
+                                    {% if study.title3 is not empty %} 
+                                        <h3>{{ study.title3 | raw  }}</h3>
+                                    {% endif %}
+                                    {% if study.description3 is not empty %} 
+                                        <p>{{ study.description3 | raw }}</p>
+                                    {% endif %}
+                                {% endif %}
+                                </div>
+                             </div>
+                        </div>
+                        {% if app.user.student.id is defined %}
+                            <form method="post" action="{{ path('recruit', { id:study.id, student_id:app.user.student.id }) }}">
+                                <input type="hidden" name="_method" value="POST">
+                                <input type="hidden" name="_token" value="{{ csrf_token('recruit' ~ app.user.student.id) }}">
+                                <button class="btn btn-success">Postuler</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+{# footer #}
+<footer id="footer" class="section-bg">
+    <div class="container">
+        <div class="copyright">
+        &copy; Copyright <strong>SWEEETCH</strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+        L'équipe de SWEEETCH
+        </div>
+    </div>
+</footer>
+
+{% endblock %}
+

@@ -1,0 +1,142 @@
+// styles for profils forms 
+
+.form-center {
+    width: 500px;
+    margin: auto;
+
+    &--login {
+        margin-top:20%;
+    }
+
+    &--signin {
+        margin-top:7%;
+    }
+}
+
+.checkbox {
+    margin-top:20px;
+}
+
+.form-check {
+    width:20px;
+}
+
+.margin-right {
+    margin-right:25px;
+    margin-left:auto;
+}
+
+.margin-left {
+    margin-left:25px;
+    margin-right: auto;
+}
+
+.offers-show {
+
+    &.table th, &.table td {
+        border:0px;
+    }
+}
+
+.Password {
+    margin-top:30px;
+}
+
+input[type="file"] {
+    opacity:1;
+    position: absolute;
+    top: 30px;
+    width:1px;
+    height:1px;
+}    
+
+.form-error {
+
+    & ul {
+        padding-left:0px;
+    }
+
+    & ul li {
+        list-style-type:none;
+        font-size:12px;
+        color:#EE153E;
+    }
+}
+
+.form-group {
+
+    & ul {
+        padding-left:0px;
+    }
+
+    & ul li {
+        list-style-type:none;
+        font-size:12px;
+        color:#EE153E;
+    }
+}
+
+.message-red {
+    
+    & ul {
+        padding-left:0px;
+    }
+
+    & ul li {
+        list-style-type:none;
+        font-size:12px;
+        color:#EE153E;
+    }
+}
+
+.form-control div {
+    position:relative;
+    left:-10px;
+}
+
+/**/
+
+.form-center {
+    width: 500px;
+    margin: auto;
+}
+
+form.form-icon {
+    width:19px;
+    margin:0px;
+    margin-right:5px;
+}
+
+.card-body.p-0 .table thead > tr > th:last-of-type, .card-body.p-0 .table thead > tr > td:last-of-type {
+    text-align:center;
+
+    &#last-left {
+        text-align:left;
+    }
+}
+
+.warningform {
+    width:100%;
+    max-width:100%;
+    margin:0px;
+}
+
+.warning-group {
+    display:flex;
+    justify-content:flex-start;
+}
+
+.check-documents {
+    width:25px;
+    margin-right:0px;
+
+    &-label {
+        margin-top: 5px;
+    }
+}
+
+// label file input 
+
+.custom-file-label::after {
+    content: "Importer";
+}

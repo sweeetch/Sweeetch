@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Sweeetch{% endblock %}</title>
+
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="@">
+
+        <link href="{{ asset('build/favicon.png') }}" rel="icon">
+        <link href="{{ asset('build/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+        {% block stylesheets %}
+            <script src="https://kit.fontawesome.com/1596c4b58a.js" crossorigin="anonymous"></script>  
+            <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,500,600,700,700i|Montserrat:300,400,500,600,700" rel="stylesheet">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+            <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+            {{ encore_entry_link_tags('student') }}
+        {% endblock %}
+    </head>
+    <body>
+        {# modal message #}
+        <div id="help-1" class="modal">
+            <div class="container" style="text-align:justify;">
+                <h5>L'embauche se déroule en 5 étapes :</h5>
+                <br>
+                <ol>
+                    <li>Cliquez sur <a class="btn btn-sm btn-success" style="color:white;">Chercher un emploi</a></li> et postulez aux offres de votre choix</li><br><br>
+                    <li>Dès qu'une entreprise vous recrute, l'étiquette <span class="badge badge-warning">à valider</span> apparait dans la barre lattérale et les tableaux de candidatures. 
+                    Vous pouvez accepter la mission en appuyant sur <button class="btn btn-success btn-sm"><i class="fas fa-user-check" title="Embaucher"></i>Accepter</button>
+                    </li><br>
+                    <li>Une fois la mission acceptée, vous pouvez prendre contact avec l'entreprise pour signer un contrat d'alternance. Votre profil affiche alors : <span class="badge bg-info">Dossier en traitement</span></li><br>
+                    <li>Une fois le contrat signé, votre profile affiche <span class="badge bg-success">En cours</span>. 
+                    C'est le moment de chercher une école en cliquant sur l'onglet <strong>Formations</strong> de la barre lattérale. 
+                    </i></li><br>
+                    <li>
+                    Lorsque vous êtes inscrits dans une école, Sweeetch a accompli sa mission. C'est le moment de voler de vos propres ailes ! <a href="">#nostalgie</a> <br> <br>
+                    La procédure de recrutement est alors archivée et consultable dans l'onglet <strong>Candidatures > Terminées</strong> de la barre lattérale.
+                    </li><br>
+                </ol>
+                <p><strong>Nb :</strong> si vous souhaitez refuser définitivement une mission, cliquez sur :   <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></p>
+                <p><strong>Nb : Tous ces boutons apparaissent au fur et à mesure de l'avancée du recrutement. Si vous ne les trouvez pas tous en même temps, c'est normal 😉 </strong></p>
+                <p style="font-weight:900;">Bonne recherche !</p>
+            </div> 
+        </div>
+
+        <div id="suppr-1" class="modal">
+            <div class="container" style="text-align:justify;">
+                <h5>Votre entreprise a supprimé son compte</h5>
+                <br>
+                <p><strong>Pas de panique !</strong></p>
+                <p>Si vous êtes déjà recruté sur Sweeetch vous gardez le droit de chercher une école sur le site.</p>
+                <p>Si vous n'êtes pas encore recruté sur Sweeetch... vous serez obligés de chercher un nouveau job ... <a href="">#désolé</a></p>
+                <p style="font-weight:900;">Toutes nos excuses pour le désagrement !</p>
+            </div> 
+        </div>
+        {# warning form #}
+        <div id="ex1" class="modal">
+            {{ include('back/_warning_form.html.twig') }}
+        </div>
+        {# admin nav #}
+        <div class="wrapper">
+            <nav class="main-header navbar navbar-expand navbar-light">
+
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+                    </li>
+
+                    <ul class="ul-ul">      
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item d-sm-inline-block" >
+                            <a class="nav-link" href="{{ path('admin') }}"> Admin </a>
+                        </li>
+                        <li class="nav-item d-none d-sm-inline-block">
+                            <a class="nav-link" href="{{ path('student_index') }}">Liste des étudiants</a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item d-sm-inline-block">
+                            <a href="/logout"  class="btn btn-outline-light">Déconnexion</a>
+                        </li>
+                    </ul>
+                </ul>
+
+            </nav>
+        
+            <aside class="main-sidebar sidebar-light-primary elevation-4">
+                <a href="{{ path('homepage') }}" class="brand-link">
+                    <img src="{{ asset('build/favicon.png') }}" alt="AdminLTE Logo" class="brand-image" style="opacity: .8">
+                    <span class="brand-text font-weight-light"> Etudiant</span>
+                </a>
+                <div class="sidebar">
+                    {# student infos #}
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                        {% if student.pictures.fileName is defined %}
+                        <div class="image">
+                            <img src="{{ uploaded_asset(student.pictures.fileName) }}" class="elevation-2" alt="User Image" style="                                   width: 200px;
+                          height: 100px;max-width: 300px;max-height:120px;
+                          object-fit: cover;">
+                        </div>
+                        {% else %}
+                        <div>
+                            <img src="https://via.placeholder.com/150" style="width: 200px;
+                            height: 100px;max-width: 300px;max-height:120px;
+                            object-fit: cover;"/>                        
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                        <div class="info">
+                            <a href="{{ path('student_show', {'id' : student.id }) }}" class="d-block">{{ app.user.email }}</a>
+                        </div>
+                    </div>
+
+                    <nav class="mt-2">
+                        {# sidebar left #}
+                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                            <li class="nav-item has-treeview">
+                                <a class="nav-link" href="{{ path('student_show', {'id' : student.id }) }}">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>
+                                        Tableau de Bord
+                                    </p>
+                                </a>
+                            </li> 
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('student_edit', {'id' : student.id }) }}">
+                                    <i class="nav-icon fa fa-user-circle"></i>
+                                    <p>
+                                        Infos du compte 
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('profile_edit', {'id': student.profile.id, 'student_id':student.id }) }}">
+                                    <i class="nav-icon fa fa-address-card"></i>
+                                    <p>
+                                        Profil Etudiant 
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('student_apply', { id:student.id }) }}">
+                                    <i class="nav-icon fa fa-bookmark"></i>
+                                    <p>
+                                        Candidatures  
+                                        {# applies infos #}                                   
+                                        {% if hired == true %}
+                                        <span class="right badge badge-warning" title="mission à confirmer">à valider</span>
+                                        {% elseif fresh > 0 %}
+                                        <span class="badge badge-primary right" title="candidatures">{{ fresh }}</span> 
+                                        {% endif %} 
+                                    </p>
+                                </a>
+                                {% if is_granted('ROLE_SUPER_STUDENT') %}
+                                    {% if app.request.get('_route') == 'student_apply' or app.request.get('_route') == 'offers_show_hired' or app.request.get('_route') == 'student_finished' %}
+
+                                        <li class="nav nav-tree">
+                                            <li class="nav-item">
+                                                <a href="{{ path('student_apply', {id:student.id}) }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Toutes</p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{{ path('student_finished', {id:student.id}) }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Terminées</p>
+                                                {# finished applies infos #}
+                                                {% if finished is defined %}
+                                                    {% if finished | length > 0 %}
+                                                <span class="right badge badge-warning">{{ finished | length }}</span>
+                                                    {% endif %}
+                                                {% endif %}
+                                                </a>
+                                            </li>
+                                        </li>
+
+                                    {% endif %} 
+                                {% endif %}
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('school_student_index', { id:student.id }) }}">
+                                    <i class="nav-icon fa fa-university"></i>
+                                    <p>
+                                        Formations 
+                                        {# recruits infos #}
+                                        {% if hiredRecruit == true %}
+                                        <span class="right badge badge-warning" title="mission à confirmer">à valider</span>
+                                        {% elseif freshRecruit > 0 %}
+                                        <span class="badge badge-primary right" title="candidatures">{{ freshRecruit }}</span> 
+                                        {% endif %}   
+                                    </p>
+                                </a>
+
+                                {% if is_granted('ROLE_SUPER_STUDENT') %}
+                                    {% if app.request.get('_route') == 'school_student_index' or app.request.get('_route') == 'show_student_hired' or app.request.get('_route') == 'school_student_finished'  %}
+
+                                        <li class="nav nav-tree">
+                                            <li class="nav-item">
+                                                <a href="{{ path('school_student_index', { id:student.id }) }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Toutes</p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{{ path('school_student_finished', {id:student.id}) }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Terminées</p>
+                                                {# finished recruits infos #}
+                                                {% if finished is defined %}
+                                                    {% if finished | length > 0 %}
+                                                <span class="right badge badge-warning">{{ finished | length }}</span>
+                                                    {% endif %}
+                                                {% endif %}
+                                                </a>
+                                            </li>
+                                        </li>
+
+                                    {% endif %} 
+                                {% endif %}
+                            </li>
+                        </ul>
+                        <br><br>
+                        <a class="btn btn-small btn-outline-success" id="tests" href="#test-1" rel="modal:open" style="display:block;margin:auto;">Présentation du Compte</a>
+                    </nav>
+                </div>
+            </aside>
+
+            {# content #}
+            <div class="content-wrapper">
+               <section class="content content-back">
+                    {% block body %}{% endblock %}
+                </section>
+            </div>
+            {# footer #}
+            <footer class="main-footer">
+                <strong>Sweeetch - Etudiant</strong>
+            </footer>
+        </div>
+
+         {# test #}
+
+         <div id="test-1" class="modal" style="max-width:700px;position:relative;">
+            <div class="container" id="container-ajax">
+                <div class="jumbotron">
+                    <div class="modal-head">
+                        <h3 style="color:black!important;text-align:center;">Bienvenue chez Sweeetch !</h3><br>
+                        <p style="color:grey;text-align:justify;">Sweeetch vous permet de trouver rapidement un emploi et une formation en alternance. Dans cette courte présentation, nous vous montrons comment utiliser l'application.</p> <br>
+                        <button class="btn btn-success" id="following-page" data-url="1" style="display:block;margin:auto;">Commencer <i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+             {% if student.profile.presentation == NULL %}
+             <div class="container" id="container-stop">
+                <label for="input" id="label">
+                    <input type="checkbox" name="input" id="input" data-url="{{ student.id }}">
+                    Ne plus afficher ce message
+                </label>
+            </div>
+            {% endif %}
+        </div>
+
+        {% block javascripts %}
+        {{ encore_entry_script_tags('student') }}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+        {% endblock %}
+        
+        {% if student.profile.presentation == NULL and app.request.get('_route') == 'student_show' %}
+        <script>
+            // presentation open popup
+            $(document).ready(function() {
+                $('#tests').click();
+            });
+        </script>
+        {% endif %}
+
+    </body>
+</html>
+

@@ -1,0 +1,107 @@
+{% extends 'base-student.html.twig' %} 
+
+{% block title %} {{ parent() }} - Ecoles {% endblock %}
+
+{% block body %}
+    {# title #}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <div>
+                    <a href="{{ path('school_student_index', {id:student.id}) }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
+                        <span class="btn-label"><i class="fa fa-chevron-left"></i></span>
+                        Revenir 
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div> <br>
+    {# success message #}
+    {% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+    {% endfor %}
+    
+    <div class="col-md-12">
+        <div class="card-responsive card">
+    
+            <div class="Password col-lg-12">
+    
+                <div class="col-lg-12">
+                    <h3 class="mb-3 mt-3 pl-3-responsive titles-front">Détail du Cursus</h3>
+                </div>
+                {# studies details #}
+                <div class="card-responsive card-body">
+                    <table class="table offers-show col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                        <tbody>
+                            <tr>
+                                <th>Ecole</th>
+                                <td style="display:flex;">
+                                     {{ studies.school.companyName }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Location</th>
+                                <td>{{ studies.title }}</td>
+                            </tr>
+                            <tr>
+                                <th>Domain</th>
+                                <td>{{ studies.domain }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="card description" style="padding:10px;">
+                        <h5 class="mb-3">Description</h5>
+                        <p>{{ studies.description |raw }}</p>
+                    </div>
+                    
+                </div>
+
+                <div class="col-lg-12">
+                    <h3 class="mb-3 mt-3 pl-3-responsive titles-front">Profil de l'Ecole</h3>
+                </div>
+                {# school details #}
+                <div class="card-responsive card-body" style="max-width:100%;overflow:scroll;">
+                
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>Ecole</th>
+                                <td>{{ studies.school.companyName }}</td>
+                            </tr>
+                            <tr>
+                                <th>Responsable</th>
+                                <td>{{ studies.school.firstname }} {{ studies.school.lastname }}</td>
+                            </tr>
+                            <tr>
+                                <th>Adresse</th>
+                                <td>{{ studies.school.address }}</td>
+                            </tr>
+                            <tr>
+                                <th>Code Postal</th>
+                                <td>{{ studies.school.zipCode }}</td>
+                            </tr>
+                            <tr>
+                                <th>Ville</th>
+                                <td>{{ studies.school.city }}</td>
+                            </tr>
+                            <tr>
+                                <th>Téléphone</th>
+                                <td>{{studies.school.telNumber }}</td>
+                            </tr>
+                            <tr>
+                                <th>Siret</th>
+                                <td>{{ studies.school.siret }}</td>
+                            </tr>
+    
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

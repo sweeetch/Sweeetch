@@ -1,0 +1,280 @@
+@media all and (max-width:1440px) {
+
+    .form-center {
+        width: 500px;
+        margin: auto;
+  
+        &--login {
+            margin-top:10%;
+        }
+    }
+
+    /*** accounts ***/       
+ #as-2.account-state {
+    margin-top:0px;
+    position:relative;
+    width:100%;
+    bottom:0px;  
+}
+}  
+
+@media all and (max-width:991px) {
+    #header .nav-desktop  {
+        display:none;
+    }
+
+    .margin-right {
+        margin-right:0px;
+        margin-left:auto;
+        padding:0px;
+    }
+    
+    .margin-left {
+        margin-left:0px;
+        margin-right: auto;
+        padding:0px;
+        margin-top:30px;
+    }
+
+    .form-center--signin {
+        margin-top:20%;
+    } 
+    
+    #intro{
+        background: rgb(57,188,236);
+        background: linear-gradient(48deg, rgba(57,188,236,1) 1%, rgba(255,131,131,1) 27%, rgba(245,189,104,0.95) 86%);
+    }
+
+    /* job offers */
+
+    .job-offer {
+        // width:100%;
+        margin-left:0px;
+        padding-top:30px;
+    }
+
+    .row-offers {
+        display:flex;
+        flex-direction: column-reverse;
+    }
+
+    .img-circle.img-fluid {
+        margin-bottom:30px;
+    }
+
+    p.small.text-muted {
+        margin-bottom:15px;
+    }
+
+    .img-offers {
+        width: 150px;
+        height: 150px;
+     }
+
+}    
+
+  
+@media all and (max-width:767px) 
+{
+    #header .logo img {
+        max-height:50px;
+    }
+    
+    .form-center {
+        width: 100%;
+        margin: auto;
+
+        &--login {
+            margin-top:40%;
+        }
+    } 
+
+    .row {
+        margin-right:0px;
+        margin-left:0px;
+    }  
+
+    .margin-left{
+        padding-left:15px;
+        padding-right:15px;
+    }
+
+    .col-lg-button {
+        padding-left:0px;
+    }
+
+    .d-flex {
+        flex-direction:column;
+    }
+
+    .member {
+        margin-bottom:15px;
+    }
+
+    #header-image {
+        width:100%
+    }
+
+    /* front section 2 */
+
+    #about  {
+        margin-top:20px;
+        padding-bottom:30px;
+        & .about-content {
+            text-align:justify;
+            & p {
+                font-size:19px;
+            }
+            & h2 {
+                font-size: 25px;
+                margin-bottom:40px;
+            }
+            & h3 {
+                font-size: 21px;
+                text-align:justify;
+                margin-bottom:40px;
+            }
+        }  
+    }
+    // delete padding on mobile
+    #padding-1 {
+        padding:0px;
+    }
+
+    #padding-2 {
+        padding:0px;
+    }
+
+    /* front section 3 */
+    #why-us {
+        padding-top:80px;
+    }
+
+    #custom-img {
+        margin-bottom:50px;
+    }
+
+    #why-us {
+        padding-bottom:10px;
+        & .why-us-content .features h4 {
+            text-align:left;
+        } 
+    }
+
+    #padding-3 {
+        padding:0px;
+    }
+
+    #why-us .why-us-content {
+        text-align:justify;
+        & .features h4 {
+            font-size:22px;
+            margin-bottom:20px;
+            width:80%;
+            text-align:justify;
+        }
+    }
+    
+
+    /* front section 4 */
+
+    #features .d-flex {
+        padding-left:50px;
+        padding-right:50px;
+    }
+
+    .img-fluid {
+        max-width: 80%;
+        display: block;
+        margin: auto;
+    }
+
+    .d-flex .member {
+        margin-right: 0px;
+    }
+
+    /*** login ***/
+    #login-option {
+        font-size:15px;
+    }
+
+    /*** sign in - student ***/
+
+    .form-center--signin {
+        margin-top:10%;
+    }
+
+    /*** offers ***/
+
+    .row-offers {
+        display:flex;
+        flex-direction: column-reverse;
+    }
+    
+    .jobs-container {
+        padding-top: 10px;
+        padding-bottom:50px;
+    }
+
+    #no-offers {
+        max-width:100%;
+        width:100%;
+    }
+
+    /* job offers */
+
+    .job-offer {
+        width:100%;
+    }
+
+    /* cursus index */
+
+    .job-single-head {
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+
+        & .job-thumb {
+            display:block;
+            margin:auto;
+            width:200px;
+        }
+
+        & .job-head-info {
+            padding:0px;
+            margin-top:30px;
+
+            & h4 {
+                text-align:center;
+            }
+
+            & span, & p {
+                margin-right: 0px;
+                display:block;
+                margin:auto;
+                text-align:center;
+                width:100%;
+                margin-top:10px;
+            }
+        }
+    }
+
+    .job-details {
+        & p {
+            & img {
+                width:100%;
+                object-fit:cover;
+                position:relative;
+            }   
+        }  
+    }
+}
+
+@media all and (max-width:400px) 
+{
+    input[type="file"] {
+        position:relative;
+        top:-32px;
+    }      
+}
+

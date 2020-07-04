@@ -1,0 +1,17 @@
+// school profil general layout 
+
+@import "../components/layout-profil";
+
+/* admin lte layout */
+
+.main-header {
+    background:$red;
+}
+
+.info-box .info-box-icon {
+    min-width:50px;
+}
+
+.overflow-box {
+    overflow:scroll;
+}

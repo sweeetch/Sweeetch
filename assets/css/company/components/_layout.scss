@@ -1,0 +1,80 @@
+// company profil general layout 
+
+@import "../components/layout-profil";
+
+.row-top {
+    height:170px;
+}
+
+.apply-message-red {
+    margin-top:5px;
+    color:$red;
+}
+
+/* admin lte layout */
+
+.main-header {
+    background: #59D2FF;
+
+    & .navbar-nav .nav-link {
+        color:white;
+    }
+}
+
+ul.pagination {
+
+    display:flex;
+    justify-content:center;
+
+    & li.page-item:nth-child(1) {
+        display:none;
+    }
+
+    & li.page-item:last-child {
+        display:none;
+    }
+   
+}
+
+.pl-3-responsive {
+    padding-left:15px;
+}
+
+/* modal */
+
+.modal {
+    position:relative;
+    overflow:scroll;
+    padding-top:40px;
+    padding-bottom:40px;
+    height:auto;
+
+    & a.close-modal {
+        top:5px;
+        right:5px;
+    }
+}
+
+td a.btn-modal {
+    padding:7px;
+
+    & i {
+        background:#6C757D;
+        color:white;
+        position:relative;
+        top:-3px;
+    } 
+
+    &-warning {
+        color:#FFC756;
+    }
+}
+
+.jquery-modal.blocker.current {
+    z-index:9999;
+}
+
+.user-panel img {
+    height:2rem;
+    width:2rem;
+}

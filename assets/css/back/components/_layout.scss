@@ -1,0 +1,49 @@
+// admin layout 
+
+/* general */
+
+.alert.alert-success {
+    background:#76C381;
+    border:1px solid #76C381;
+}
+
+.container-flex {
+    display:flex;
+}
+
+.content-wrapper > .content {
+    padding-bottom:30px;
+}
+
+:not(.layout-fixed) .main-sidebar {
+    position:fixed;
+}
+
+/* modal */
+
+.modal {
+    position:relative;
+    overflow:scroll;
+    padding-top:40px;
+    padding-bottom:40px;
+
+    & a.close-modal {
+        top:5px;
+        right:5px;
+    }
+}
+
+.jquery-modal.blocker.current {
+    z-index:9999;
+}
+
+ .ul-ul {
+    display:flex;
+    flex-direction:row;
+    list-style-type:none;
+    justify-content: space-between;
+}
+
+.navbar-nav {
+    width:100%;
+}

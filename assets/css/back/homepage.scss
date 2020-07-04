@@ -1,0 +1,24 @@
+// admin stylesheets
+
+@import "~bootstrap";
+@import "~font-awesome";
+@import "~admin-lte";
+
+// common styles 
+@import "../components/helpers";    // colors 
+@import "../components/table";  // all tables 
+@import "../components/form";   // admin forms 
+
+
+// particular styles
+@import "/components/buttons";  
+@import "/components/nav";  // left sidebar 
+@import "/components/card";
+@import "/components/icons";
+@import "/components/layout";
+
+@import "/components/media-queries";
+
+
+
+

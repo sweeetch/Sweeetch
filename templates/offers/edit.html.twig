@@ -1,0 +1,124 @@
+{% extends 'base-company.html.twig' %}
+
+{% block title %} {{ parent() }} - Emploi {% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="row" style="position:relative;">
+            <div class="col-lg-6">
+                <h1 class="m-0 text-dark">Modifier un Emploi</h1> <br>
+                <a href="{{ path('offers_company_index', {id:company.id}) }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
+                    <span class="btn-label"><i class="fa fa-chevron-left"></i></span>
+                    Revenir 
+                </a>
+            </div>
+            <div class="col-lg-6" style="display:flex;justify-content:flex-end;position:absolute;bottom:0px;right:0px;"> 
+                <button class="btn btn-primary" style="margin-right:20px;">{{ button_label|default('Enregistrer') }}</button>
+                <form method="post" action="{{ path('offers_delete', {'id': offers.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offers.id) }}">
+                    <button class="btn btn-danger" style="display:block;">Supprimer</button>
+                </form>
+            </div>
+        </div>
+    </div> <br>
+
+    {% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+    {% endfor %}
+
+    {% for message in app.flashes('error') %}
+    <div class="alert alert-danger">
+        {{ message }}
+    </div>
+    {% endfor %}
+
+
+    <section class="content" style="padding-left:15px;padding-right:15px;">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-responsive-table">
+                    <div class="card-header">
+                        <h3 class="card-title" style="font-weight:900;font-size:22px;">Candidatures</h3>
+                        <a href="#help-1" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                            <i class="fas fa-question-circle"></i>
+                        </a>
+                    </div>
+                    {# candidates #}
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Date de candidature</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                       
+                        {% if applies[0] is defined %}
+
+                            {% for applies in applies %}
+
+                                <tr>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                    <td style="padding-top: 18px;"><a href="{{ path('student_show', { "id":applies.student.id }) }}">{{ applies.student.name }} {{ applies.student.lastname }}</a></td>
+                                    {% else %}
+                                    <td style="padding-top: 18px;"><a href="{{ path('show_applied_profile', { "id":applies.student.id, "company_id": offers.company.id, "offers":offers.id }) }}">{{ applies.student.name }} {{ applies.student.lastname }}</a></td>
+                                    {% endif %}
+                                    <td>{{ applies.dateRecruit|date("d/m/Y à g\\hi") }}</td>
+                                    <td style="color:white;">
+                                    
+                                        <div class="btn-group">
+                                    {% if applies.hired == false and applies.confirmed == false and applies.agree == false %}
+                                            {# apply options #}
+                                            <form method="post" action="{{ path('hire', { id:applies.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir embaucher cet étudiant ?');">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('hire' ~ applies.id) }}">
+                                                <button class="btn btn-success btn-sm">
+                                                    <i class="fas fa-user-check" title="Embaucher"></i>
+                                                    Recruter
+                                                </button>
+                                            </form>
+
+                                            <form method="post" action="{{ path('apply_refuse', {'id': applies.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette candidature ?');">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('refuse' ~ applies.id) }}">
+                                                <button class="btn btn-danger btn-sm">
+                                                    <i class="fas fa-times"></i>
+                                                    Refuser
+                                                </button>
+                                            </form>
+
+                                    {% elseif applies.hired == true %}
+                                            <span class="badge badge-warning right">En attente d'acceptation du candidat</span>
+                                    {% elseif applies.agree == true %}
+
+                                            <form method="post" class="btn-icon-form" action="{{ path('confirm', { id:applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir commencer la mission ?');">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('confirm' ~ applies.id) }}">
+                                                <button class="btn btn-info btn-sm">
+                                                    <i class="far fa-stop-circle"></i>
+                                                    Finaliser le recrutement
+                                                </button>
+                                            </form>
+
+                                    {% endif %}
+                                        </div>
+                                    </td>
+                                </tr>
+                        
+                            {% endfor %}
+                        
+                        {% endif %} 
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{ include('offers/_form.html.twig') }}
+
+{% endblock %}

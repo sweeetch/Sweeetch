@@ -1,0 +1,87 @@
+
+{{ form_start(form) }}
+
+<div class="col-md-12">
+    <br>
+    <h2>Modifier la Formation</h2>
+    <br>
+    <div class="card-responsive card">
+        <div class="card-body mt-2 mb-5">
+            <div class="row">
+                <div class="form-group col-lg-12">
+                    {{ form_row(form.title, {'attr' : { class: 'form-control' }} ) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-12">
+                    {{ form_row(form.domain, {'attr' : { class: 'form-control' }} ) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-12">
+                    {{ form_row(form.video, {'attr' : { class: 'form-control' }} ) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="card-responsive card">
+        <div class="card-body mt-2 mb-5">
+            <div class="row">
+                <div class="form-group col-lg-12">
+                    {{ form_row(form.title1, {'label':'Titre 1','attr' : { class: 'form-control', 'rows':15 }} ) }}
+                </div>
+            </div>    
+            <div class="row">
+                <div class="form-group col-lg-12">
+                    <br>
+                    {{ form_label(form.description, 'Description') }}
+                    <small id="emailHelp" class="form-text text-muted">Ajoutez des images par glisser-deposer, puis ajustez-les manuellement</small>
+                    {{ form_row(form.description, {'label':' ', 'attr' : { class: 'form-control', 'rows':15 }} ) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="card-responsive card">
+        <div class="card-body mt-2 mb-5">
+            <div class="row">
+                <div class="form-group col-lg-12">
+                    {{ form_row(form.title2, {'label':'Titre 2','attr' : { class: 'form-control', 'rows':15 }} ) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-12">
+                    <br>
+                    {{ form_label(form.description2, 'Description 2') }}
+                    <small id="emailHelp" class="form-text text-muted">Ajoutez des images par glisser-deposer, puis ajustez-les manuellement</small>
+                    {{ form_row(form.description2, {'label':' ', 'attr' : { class: 'form-control', 'rows':15 }} ) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="card-responsive card">
+        <div class="card-body mt-2 mb-5">
+            <div class="row">
+                <div class="form-group col-lg-12">
+                    {{ form_row(form.title3, {'label':'Titre 3', 'attr' : { class: 'form-control', 'rows':15 }} ) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-12">
+                    <br>
+                    {{ form_label(form.description3, 'Description 3') }}
+                    <small id="emailHelp" class="form-text text-muted">Ajoutez des images par glisser-deposer, puis ajustez-les manuellement</small>
+                    {{ form_row(form.description3, {'label': ' ', 'attr' : { class: 'form-control', 'rows':15 }} ) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ form_end(form) }}

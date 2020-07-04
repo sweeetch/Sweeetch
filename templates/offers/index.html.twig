@@ -1,0 +1,164 @@
+{# find offers page #}
+{% extends 'base-front.html.twig' %}
+
+{% block title %} {{ parent() }} - Alternance {% endblock %}
+
+{% block body %}
+
+<div class="background-jobs">
+
+    <div class="container-fluid container-jobs">
+
+        <header id="header">
+
+            <div class="container" id="customer-header">
+                {# nav #}
+                <nav class="main-nav d-none d-lg-block">
+                    <ul>
+                        <li class="active"><a href="/">Accueil</a></li>
+                        {% if page is defined %}
+                        <li><a href="{{ path('offers_index', {'page':page}) }}">Alternances</a></li>
+                        {% else %}
+                        <li><a href="{{ path('offers_index') }}">Alternances</a></li>
+                        {% endif %}
+                        {% if pages is defined %}
+                        <li><a href="{{ path('studies_candidate_index', {'page':pages}) }}">Formations</a></li>
+                        {% else %}
+                        <li><a href="{{ path('studies_candidate_index', {'page':1}) }}">Formations</a></li>
+                        {% endif %}
+                        {% if is_granted('ROLE_USER') %}
+                            {% if is_granted('ROLE_ADMIN') %}
+                            <li><a href="/admin">ADMIN</a></li>
+                            {% elseif  is_granted('ROLE_STUDENT') %}
+                            <li><a href="{{ path('student_show', {'id': app.user.student.id}) }}">MON PROFILE</a></li>
+                            {% elseif  is_granted('ROLE_COMPANY') %}
+                            <li><a href="{{ path('company_show', {'id': app.user.company.id}) }}">MON ENTREPRISE</a></li>
+                            {% elseif  is_granted('ROLE_SCHOOL') %}
+                            <li><a href="{{ path('school_show', {'id': app.user.school.id}) }}">MON ECOLE</a></li>
+                            {% endif %} 
+                        <li><a href="/logout">DECONNEXION</a></li>
+                        {% else %}
+                        <li class="drop-down"><a>S'INSCRIRE</a>
+                            <ul>
+                                <li><a href="/student/new">Etudiants</a></li>
+                                <li><a href="/company/new">Entreprises</a></li>
+                                <li><a href="/school/new">Ecoles</a></li>
+                            </ul>
+                        </li> 
+                        <li><a href="/login/">CONNEXION</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            
+            </div>
+        </header>
+
+    <div class="jobs-container">
+
+        <h1 class="titles-front">Alternances</h1><br>
+        {# success message #}
+        {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {# option menu #}
+        <form method="get" action="{{ path('find') }}" style="margin:auto;width:300px;" id="form-options">
+            <p>
+                <div style="display:flex;justify-content:center;align-items:center;">
+                    <label style="text-align:center;">Quel est votre domaine ?</label><button class="btn btn-primary" style="margin:10px;"><i class="fa fa-search" id="search-offers"></i></button>
+                </div>
+                <select name="domain" id="domain" style="margin-left:19px;">
+                    <option value="tous">Tous</option>
+                    <option value="Grande distribution">Grande distribution</option>
+                    <option value="Vente & Commerce">Vente & Commerce</option>
+                    <option value="Restauration">Restauration</option>
+                    <option value="Artisanat">Artisanat</option>
+                    <option value="Marketing & Communication">Marketing & Communication</option>
+                    <option value="Assistanat & secrétariat">Assistanat & secrétariat</option>
+                    <option value="Hôtellerie & alimentation">Hôtellerie & alimentation</option>
+                    <option value="Immobilier">Immobilier</option>
+                </select>
+                <input type="hidden" name="_token" value="{{ csrf_token('find' ~ page) }}">
+            </p>
+         </form>
+         {# paginate #}
+        <div class="pagination-top">{{ knp_pagination_render(offers) }}</div>
+         {# render offers #}
+         <!-- <div class="card card-solid"> -->
+        <div class="card-body pb-0">
+            {# <div class="row d-flex align-items-stretch"> #}
+            <div>
+                <div class="d-flex" style="flex-wrap:wrap;">
+        {% for offer in offers %}
+            {# {% if offer.applies[0] is not defined or offer.applies[0] is defined and offer.applies[0].hired == false and offer.applies[0].confirmed == false and offer.applies[0].finished == false %} #}
+
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="job-grid border">
+                    <div class="job-title-sec">
+                        <div class="c-logo"> 
+                            {% if offer.company.pictures.fileName is defined %}
+                            <img src="{{ uploaded_asset(offer.company.pictures.fileName) }}" alt="">
+                            {% else %}
+                            <img src="https://via.placeholder.com/150" alt="" >
+                            {% endif %}
+                        </div>
+                        <h3><a href="{{ path('offers_show', {'id': offer.id, 'page':page}) }}">{{ offer.title }}</a></h3>
+                        <span>{{ offer.company.firstname}} {{ offer.company.lastname}}</span>
+                        <span class="fav-job"><i class="la la-heart-o"></i></span>
+                    </div>
+                    <span class="job-lctn">{{ offer.domain}}</span>
+                    <a  class="a-button" href="{{ path('offers_show', {'id': offer.id, 'page':page}) }}">POSTULER</a>
+                </div><!-- JOB Grid -->
+            </div>
+            {% else %}
+            <tr>
+                <td colspan="8">
+                    
+                    <div class="info-box mb-3" style="border:1px solid rgba(0, 0, 0, 0.125);border-radius:5px;margin-top:30px;">
+                        <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-info"></i></span>
+        
+                        <div class="info-box-content" style="padding-top:17px;">
+                            <span class="info-box-number">Aucune altrenance pour le moment</span>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+            {# {% endif %} #}
+        {# {% else %}
+            <tr>
+                <td colspan="8">
+       
+                    <div class="info-box mb-3" style="border:1px solid rgba(0, 0, 0, 0.125);border-radius:5px;margin-top:30px;">
+                        <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-info"></i></span>
+        
+                        <div class="info-box-content" style="padding-top:17px;">
+                            <span class="info-box-number">Aucune altrenance pour le moment</span>
+                        </div>
+                    </div>
+                            
+                </td>
+            </tr> #}
+        {% endfor %} 
+        </div>
+    </div>
+</div>
+        {# paginate #}
+        <div class="pagination-bottom">{{ knp_pagination_render(offers) }}</div> 
+    </div>
+</div>
+
+{# footer #}
+<footer id="footer" class="section-bg">
+    <div class="container">
+        <div class="copyright">
+        &copy; Copyright <strong>SWEEETCH</strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+        L'équipe de SWEEETCH
+        </div>
+    </div>
+</footer>
+
+{% endblock %}

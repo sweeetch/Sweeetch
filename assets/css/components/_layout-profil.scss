@@ -1,0 +1,205 @@
+// profils general layout 
+
+.alert.alert-success {
+    background:#76C381;
+    border:1px solid #76C381;
+}
+
+.alert.alert-danger {
+    background:#FF5961AB !important;
+    border:1px solid #FF5961AB !important;
+}
+
+* {
+    font-family: 'Roboto', "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+}
+
+h1, h2 {
+    color:$lightDarker;
+}
+
+h3 {
+    color:$titleBlue;
+}
+
+h4 {
+    color:$titleYellow;
+}
+
+h5 {
+    color:$titleGrey; 
+}
+
+th {
+    color:$titleGrey;  
+}
+
+td {
+    color:$lightDarker;
+    font-weight:bold;
+}
+
+td a {
+    color:$linkBlue;
+    
+    &:hover{
+        color:$darkerBlue;
+    }
+}
+
+:not(.layout-fixed) .main-sidebar{
+    position:fixed !important;
+}
+
+.edit-items {
+    color:$linkBlue;   
+}
+
+.bg-warning {
+    background:$yellow;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color:rgb(250, 231, 232);
+}
+
+.content-wrapper > .content {
+    padding-bottom:30px;
+}
+
+.content {
+
+    &.content-back {
+        padding-top:40px;
+    }
+}
+
+.account-state {
+    margin-top:30px;
+}
+
+ /*** accounts ***/       
+ #as-2.account-state {
+    margin-top:10px;
+    position:absolute;
+    width:95%;
+    bottom:0px;  
+}
+
+.border-top {
+    color: $contentNone;
+    border-top:1px solid #dee2e6;
+}
+
+td.border-top-td {
+    color:#bdbcbc !important;
+    font-style:italic;
+}
+
+.navbar-nav {
+    width:100%;
+    justify-content: space-between;
+}
+
+// offers description
+
+.job-single-sec {
+    float: left;
+    width: 100%;
+}
+
+.job-single-head {
+    float: left;
+    width: 100%;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #e8ecec;
+    display: table;
+    margin-bottom:30px;
+}
+
+.job-thumb {
+    width: 200px;
+    height: 100px;
+    overflow: hidden;
+    position: relative;    display: table-cell;
+    vertical-align: top;
+    width: 107px;
+
+    & img {
+        width: 200px;
+        height: 100px;
+        max-width: 300px;
+        max-height:120px;
+        object-fit: cover;
+    }
+}
+
+.job-head-info {
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 25px;
+
+    & h4 {
+        text-align:left;
+    }
+
+    & span {
+        float: left;
+        margin: 0;
+        margin-top: 0px;
+        margin-right: 0px;
+        font-size: 13px;
+        margin-right: 40px;
+        color: #888;
+        margin-top: 11px;
+    }
+
+    & p {
+        float: left;
+        margin: 0;
+        margin-top: 0px;
+        margin-right: 0px;
+        font-size: 13px;
+        margin-right: 40px;
+        color: #888;
+        margin-top: 11px;
+    }
+}
+
+.job-details {
+
+    float: left;
+    width: 100%;
+    padding-top: 20px;
+
+    & p {
+        float: left;
+        width: 100%;
+        font-size: 13px;
+        color: #888888;
+        line-height: 24px;
+        margin: 0;
+        margin-bottom: 19px;
+        text-align:justify;
+    }
+
+    & h3 {
+        float: left;
+        width: 100%;
+        font-size: 18px;
+        font-weight: 500;
+        color: #202020;
+        margin-bottom: 15px;
+        margin-top: 10px;text-align:left;
+    }
+
+    & ul {
+        float: left;
+        width: 100%;
+        font-size: 13px;
+        color: #888888;
+        line-height: 24px;
+        margin: 0;
+        margin-bottom: 19px;
+    }
+}
