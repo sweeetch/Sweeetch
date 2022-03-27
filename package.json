@@ -28,7 +28,7 @@
         "admin-lte": "^3.0",
         "animate.css": "^3.7.2",
         "font-awesome": "^4.7.0",
-        "minimist": "^1.2.2",
+        "minimist": "^1.2.6",
         "tinymce": "^5.2.2"
     }
 }
