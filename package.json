@@ -5,7 +5,7 @@
         "@ckeditor/ckeditor5-editor-classic": "^17.0.0",
         "@ckeditor/ckeditor5-essentials": "^17.0.0",
         "@ckeditor/ckeditor5-paragraph": "^17.0.0",
-        "@symfony/webpack-encore": "^0.28.3",
+        "@symfony/webpack-encore": "^4.1.1",
         "bootstrap": "^4.4.1",
         "core-js": "^3.6.5",
         "jquery": "^3.5.1",
